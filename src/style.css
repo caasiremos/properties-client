@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  @apply antialiased text-gray-800;
+}
+
+/* Swiper Custom Styles */
+.swiper-button-next,
+.swiper-button-prev {
+  @apply hidden md:flex text-teal-600;
+}
+
+.swiper-pagination-bullet {
+  @apply bg-gray-300;
+}
+
+.swiper-pagination-bullet-active {
+  @apply bg-teal-600;
+}
+
+/* Custom Form Styles */
+.form-input:focus,
+.form-select:focus {
+  @apply border-teal-500 ring-teal-500;
+}
