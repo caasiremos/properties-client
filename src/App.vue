@@ -6,12 +6,14 @@ import TheFooter from './components/layout/TheFooter.vue';
 
 const route = useRoute();
 
+const authPages = ['/login', '/register', '/forgot-password'];
+
 const showHeader = computed(() => {
-  return !route.path.startsWith('/dashboard');
+  return !route.path.startsWith('/dashboard') && !authPages.includes(route.path);
 });
 
 const showFooter = computed(() => {
-  return !route.path.startsWith('/dashboard');
+  return !route.path.startsWith('/dashboard') && !authPages.includes(route.path);
 });
 </script>
 

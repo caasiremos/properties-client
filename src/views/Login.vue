@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { HomeIcon } from '@heroicons/vue/24/outline';
 
 const router = useRouter();
 const email = ref('');
@@ -30,139 +31,215 @@ const handleLogin = async () => {
 <template>
   <div class="min-h-screen flex">
     <!-- Left Column - Image -->
-    <div class="hidden lg:block lg:w-1/2 relative">
+    <div class="hidden lg:block lg:w-1/2 relative overflow-hidden">
+      <!-- Background Image -->
       <img
-        src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c"
-        alt="Modern property"
-        class="absolute inset-0 w-full h-full object-cover"
+        src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&q=80"
+        alt="Luxury modern property"
+        class="absolute inset-0 w-full h-full object-cover transform hover:scale-105 transition-transform duration-1000"
       />
-      <div class="absolute inset-0 bg-linear-to-r from-primary-600/90 to-primary-800/90 mix-blend-multiply" />
+      
+      <!-- Gradient Overlays -->
+      <div class="absolute inset-0 bg-gradient-to-br from-primary-900/95 via-primary-800/90 to-primary-600/80 mix-blend-multiply animate-gradient" />
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,transparent_40%,rgba(0,0,0,0.4))]" />
+      
+      <!-- Content -->
       <div class="absolute inset-0 flex items-center justify-center p-12">
         <div class="text-white text-center">
-          <h2 class="text-4xl font-bold mb-4">Welcome to Property256</h2>
-          <p class="text-xl text-primary-100">
-            Your trusted partner in finding the perfect property in Uganda
-          </p>
+          <!-- Decorative Elements -->
+          <div class="mb-8 relative">
+            <div class="flex flex-col items-center">
+              <div class="w-24 h-24 relative mb-4">
+                <div class="absolute inset-0 bg-white/10 rounded-full animate-pulse"></div>
+                <div class="absolute inset-2 bg-white/20 rounded-full animate-ping opacity-75"></div>
+                <HomeIcon class="w-24 h-24 text-white/90 relative z-10 transform hover:rotate-12 transition-transform duration-300" />
+              </div>
+              <div class="relative">
+                <span class="text-3xl font-bold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
+                  FindProperty
+                  <span class="text-primary-400">24</span>
+                </span>
+                <div class="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary-400 to-transparent"></div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Text Content -->
+          <div class="space-y-6 relative transform transition-all duration-500">
+            <h2 class="text-4xl font-bold mb-6 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white/80 animate-gradient-x">
+              Find Your Dream Home
+            </h2>
+            <p class="text-xl text-white/90 max-w-lg mx-auto leading-relaxed">
+              Discover the perfect property that matches your lifestyle. Your journey to exceptional living starts here.
+            </p>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Right Column - Login Form -->
-    <div class="w-full lg:w-1/2 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
+    <div class="w-full lg:w-1/2 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-50 to-white">
       <div class="max-w-md w-full mx-auto">
         <div class="text-center">
-          <h2 class="text-3xl font-bold tracking-tight text-gray-900">
-            Sign in to your account
+
+          <div class="flex justify-center items-center mb-8">
+            <div class="w-48 h-0.5 bg-gradient-to-r from-transparent via-gray-300 to-transparent rounded-full"></div>
+          </div>
+
+          <h2 class="text-3xl font-bold tracking-tight text-gray-900 mb-2">
+            Welcome Back
           </h2>
           <p class="mt-2 text-sm text-gray-600">
-            Or
-            <router-link to="/register" class="font-medium text-primary-600 hover:text-primary-500">
-              create a new account
+            Don't have an account yet?
+            <router-link to="/register" class="font-medium text-primary-600 hover:text-primary-500 transition-colors duration-200">
+              Create one now
             </router-link>
           </p>
         </div>
 
         <div class="mt-8">
-          <div class="bg-white py-8 px-4 shadow-sm sm:rounded-lg sm:px-10">
-            <form class="space-y-6" @submit.prevent="handleLogin">
-              <div>
-                <label for="email" class="block text-sm font-medium text-gray-700">
-                  Email address
+          <form class="space-y-6" @submit.prevent="handleLogin">
+            <div class="relative">
+              <input
+                id="email"
+                v-model="email"
+                type="email"
+                required
+                placeholder=" "
+                class="peer block w-full rounded-lg border-2 border-gray-300 px-4 pt-5 pb-2 text-gray-900 focus:border-primary-500 focus:ring-0 focus:outline-none transition-colors duration-200"
+              />
+              <label
+                for="email"
+                class="absolute left-4 top-4 z-10 origin-[0] -translate-y-3 scale-75 transform text-gray-500 duration-200 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75 peer-focus:text-primary-500"
+              >
+                Email address
+              </label>
+            </div>
+
+            <div class="relative">
+              <input
+                id="password"
+                v-model="password"
+                type="password"
+                required
+                placeholder=" "
+                class="peer block w-full rounded-lg border-2 border-gray-300 px-4 pt-5 pb-2 text-gray-900 focus:border-primary-500 focus:ring-0 focus:outline-none transition-colors duration-200"
+              />
+              <label
+                for="password"
+                class="absolute left-4 top-4 z-10 origin-[0] -translate-y-3 scale-75 transform text-gray-500 duration-200 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75 peer-focus:text-primary-500"
+              >
+                Password
+              </label>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <div class="flex items-center">
+                <input
+                  id="remember-me"
+                  v-model="rememberMe"
+                  type="checkbox"
+                  class="h-4 w-4 rounded-sm border-gray-300 text-primary-600 focus:ring-primary-500 transition-colors duration-200"
+                />
+                <label for="remember-me" class="ml-2 block text-sm text-gray-700">
+                  Remember me
                 </label>
-                <div class="mt-1">
-                  <input
-                    id="email"
-                    v-model="email"
-                    type="email"
-                    required
-                    class="block w-full rounded-md border-gray-300 shadow-xs focus:border-primary-500 focus:ring-primary-500"
-                  />
-                </div>
               </div>
 
-              <div>
-                <label for="password" class="block text-sm font-medium text-gray-700">
-                  Password
-                </label>
-                <div class="mt-1">
-                  <input
-                    id="password"
-                    v-model="password"
-                    type="password"
-                    required
-                    class="block w-full rounded-md border-gray-300 shadow-xs focus:border-primary-500 focus:ring-primary-500"
-                  />
-                </div>
-              </div>
-
-              <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                  <input
-                    id="remember-me"
-                    v-model="rememberMe"
-                    type="checkbox"
-                    class="h-4 w-4 rounded-sm border-gray-300 text-primary-600 focus:ring-primary-500"
-                  />
-                  <label for="remember-me" class="ml-2 block text-sm text-gray-900">
-                    Remember me
-                  </label>
-                </div>
-
-                <div class="text-sm">
-                  <a href="#" class="font-medium text-primary-600 hover:text-primary-500">
-                    Forgot your password?
-                  </a>
-                </div>
-              </div>
-
-              <div v-if="error" class="text-red-600 text-sm">
-                {{ error }}
-              </div>
-
-              <div>
-                <button
-                  type="submit"
-                  :disabled="isLoading"
-                  class="flex w-full justify-center rounded-md border border-transparent bg-primary-600 py-2 px-4 text-sm font-medium text-white shadow-xs hover:bg-primary-700 focus:outline-hidden focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  <span v-if="isLoading">Signing in...</span>
-                  <span v-else>Sign in</span>
-                </button>
-              </div>
-            </form>
-
-            <div class="mt-6">
-              <div class="relative">
-                <div class="absolute inset-0 flex items-center">
-                  <div class="w-full border-t border-gray-300" />
-                </div>
-                <div class="relative flex justify-center text-sm">
-                  <span class="bg-white px-2 text-gray-500">Or continue with</span>
-                </div>
-              </div>
-
-              <div class="mt-6 grid grid-cols-2 gap-3">
-                <button
-                  class="flex w-full items-center justify-center gap-3 rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:outline-hidden focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
-                >
-                  <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"/>
-                  </svg>
-                  <span>Google</span>
-                </button>
-                <button
-                  class="flex w-full items-center justify-center gap-3 rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:outline-hidden focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
-                >
-                  <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                  </svg>
-                  <span>Facebook</span>
-                </button>
+              <div class="text-sm">
+                <RouterLink to="/forgot-password" class="font-medium text-primary-600 hover:text-primary-500 transition-colors duration-200">
+                  Forgot password?
+                </RouterLink>
               </div>
             </div>
-          </div>
+
+            <div v-if="error" class="bg-red-50 text-red-600 text-sm p-3 rounded-lg animate-shake">
+              {{ error }}
+            </div>
+
+            <div>
+              <button
+                type="submit"
+                :disabled="isLoading"
+                class="group relative flex w-full justify-center rounded-lg border border-transparent bg-primary-600 py-3 px-4 text-sm font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:-translate-y-0.5"
+              >
+                <span v-if="isLoading" class="flex items-center">
+                  <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Signing in...
+                </span>
+                <span v-else>Sign in</span>
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes gradient-x {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+  20%, 40%, 60%, 80% { transform: translateX(2px); }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.9);
+  }
+}
+
+@keyframes ping {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.75;
+    transform: scale(1.2);
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 15s ease infinite;
+}
+
+.animate-gradient-x {
+  background-size: 200% auto;
+  animation: gradient-x 8s ease infinite;
+}
+
+.animate-shake {
+  animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-ping {
+  animation: ping 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+</style>
