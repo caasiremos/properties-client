@@ -1,10 +1,11 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline';
+import { Bars3Icon, XMarkIcon, HomeIcon } from '@heroicons/vue/24/outline';
 
 const router = useRouter();
 const isMenuOpen = ref(false);
+const hasScrolled = ref(false);
 
 const navigation = [
   { name: 'Buy', href: '/buy' },
@@ -14,23 +15,31 @@ const navigation = [
   { name: 'News & Advice', href: '/news' },
 ];
 
-const navigateToLogin = () => {
-  router.push('/login');
+const handleScroll = () => {
+  hasScrolled.value = window.scrollY > 0;
 };
 
-const navigateToRegister = () => {
-  router.push('/register');
-};
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll);
+});
 </script>
 
 <template>
-  <header class="bg-white shadow-md">
+  <header :class="[
+    'fixed w-full z-50 transition-all duration-300 ease-in-out',
+    hasScrolled ? 'bg-white/95 backdrop-blur-sm shadow-lg' : 'bg-white shadow-md'
+  ]">
     <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Top">
       <div class="flex h-16 items-center justify-between">
         <!-- Logo -->
         <div class="flex items-center">
-          <router-link to="/" class="text-2xl font-bold text-primary-600">
-            Property256
+          <router-link to="/" class="flex items-center space-x-2">
+            <HomeIcon class="h-8 w-8 text-primary-600" />
+            <span class="text-2xl font-bold text-primary-600">findproperty24</span>
           </router-link>
         </div>
 
@@ -46,14 +55,14 @@ const navigateToRegister = () => {
 
         <!-- User Actions -->
         <div class="hidden md:flex items-center space-x-4">
-          <button @click="navigateToLogin" 
+          <RouterLink :to="{ name: 'login' }" 
                   class="text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium">
             Login
-          </button>
-          <button @click="navigateToRegister"
+          </RouterLink>
+          <RouterLink :to="{ name: 'register' }"
                   class="bg-primary-600 text-white hover:bg-primary-700 px-4 py-2 rounded-md text-sm font-medium">
             Register
-          </button>
+          </RouterLink>
         </div>
 
         <!-- Mobile menu button -->
@@ -79,16 +88,16 @@ const navigateToRegister = () => {
         </div>
         <div class="border-t border-gray-200 pb-3 pt-4">
           <div class="flex items-center px-5">
-            <button @click="navigateToLogin"
+            <RouterLink :to="{ name: 'login' }" 
                     class="block w-full text-center text-gray-700 hover:text-primary-600 px-3 py-2 text-base font-medium">
               Login
-            </button>
+            </RouterLink>
           </div>
           <div class="mt-3 px-2">
-            <button @click="navigateToRegister"
+            <RouterLink :to="{ name: 'register' }"
                     class="block w-full text-center bg-primary-600 text-white hover:bg-primary-700 px-4 py-2 rounded-md text-base font-medium">
               Register
-            </button>
+            </RouterLink>
           </div>
         </div>
       </div>
