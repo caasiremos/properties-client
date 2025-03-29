@@ -42,7 +42,7 @@ const toggleUserMenu = () => {
           <div class="relative">
             <button
               @click="toggleNotifications"
-              class="p-2 text-gray-500 rounded-full hover:bg-gray-100 focus:outline-none"
+              class="p-2 text-gray-500 rounded-full hover:bg-gray-100 focus:outline-hidden"
             >
               <BellIcon class="w-6 h-6" />
               <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
@@ -71,7 +71,7 @@ const toggleUserMenu = () => {
           <div class="relative">
             <button
               @click="toggleUserMenu"
-              class="flex items-center space-x-2 text-gray-700 hover:text-gray-900 focus:outline-none"
+              class="flex items-center space-x-2 text-gray-700 hover:text-gray-900 focus:outline-hidden"
             >
               <UserCircleIcon class="w-8 h-8" />
               <span class="text-sm font-medium">John Doe</span>

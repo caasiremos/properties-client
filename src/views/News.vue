@@ -22,7 +22,7 @@ const filteredArticles = computed(() => {
 <template>
   <div class="min-h-screen bg-gray-50">
     <!-- Page Header -->
-    <div class="bg-white shadow">
+    <div class="bg-white shadow-sm">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <h1 class="text-3xl font-bold text-gray-900">News & Advice</h1>
         <p class="mt-2 text-gray-600">Stay informed with the latest real estate insights and advice</p>

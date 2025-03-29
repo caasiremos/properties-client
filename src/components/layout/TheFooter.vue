@@ -110,9 +110,9 @@ const socialLinks = [
           <div class="mt-4 md:mt-0 flex items-center space-x-4">
             <span class="text-gray-400">Payment Methods:</span>
             <div class="flex space-x-2">
-              <span class="bg-white text-gray-900 px-2 py-1 rounded text-sm">Visa</span>
-              <span class="bg-white text-gray-900 px-2 py-1 rounded text-sm">Mastercard</span>
-              <span class="bg-white text-gray-900 px-2 py-1 rounded text-sm">Mobile Money</span>
+              <span class="bg-white text-gray-900 px-2 py-1 rounded-sm text-sm">Visa</span>
+              <span class="bg-white text-gray-900 px-2 py-1 rounded-sm text-sm">Mastercard</span>
+              <span class="bg-white text-gray-900 px-2 py-1 rounded-sm text-sm">Mobile Money</span>
             </div>
           </div>
         </div>

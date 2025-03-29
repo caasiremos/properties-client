@@ -17,7 +17,7 @@ const navigateToArticle = () => {
 <template>
   <article 
     @click="navigateToArticle"
-    class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow cursor-pointer">
+    class="bg-white rounded-lg shadow-xs overflow-hidden hover:shadow-md transition-shadow cursor-pointer">
     <img :src="article.image" 
          :alt="article.title"
          class="w-full h-48 object-cover" />

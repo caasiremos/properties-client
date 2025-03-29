@@ -73,7 +73,7 @@ const updateFilter = (key, value) => {
                      ? [...selectedFilters.propertyTypes, type]
                      : selectedFilters.propertyTypes.filter(t => t !== type)
                  )"
-                 class="rounded border-gray-300 text-primary-600 focus:ring-primary-500" />
+                 class="rounded-sm border-gray-300 text-primary-600 focus:ring-primary-500" />
           <span class="ml-2 text-sm text-gray-700">{{ type }}</span>
         </label>
       </div>
@@ -108,7 +108,7 @@ const updateFilter = (key, value) => {
                      ? [...selectedFilters.amenities, amenity]
                      : selectedFilters.amenities.filter(a => a !== amenity)
                  )"
-                 class="rounded border-gray-300 text-primary-600 focus:ring-primary-500" />
+                 class="rounded-sm border-gray-300 text-primary-600 focus:ring-primary-500" />
           <span class="ml-2 text-sm text-gray-700">{{ amenity }}</span>
         </label>
       </div>
