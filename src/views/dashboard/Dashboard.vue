@@ -8,7 +8,7 @@ import DashboardStats from '../../components/dashboard/DashboardStats.vue';
   <div class="min-h-screen bg-gray-100">
     <div class="flex h-screen">
       <!-- Sidebar -->
-      <div class="w-64 flex-shrink-0">
+      <div class="w-64 shrink-0">
         <DashboardSidebar />
       </div>
 
@@ -23,7 +23,7 @@ import DashboardStats from '../../components/dashboard/DashboardStats.vue';
           <!-- Recent Activity -->
           <div class="mt-8">
             <h2 class="text-lg font-medium text-gray-900 mb-4">Recent Activity</h2>
-            <div class="bg-white rounded-lg shadow-sm p-6">
+            <div class="bg-white rounded-lg shadow-xs p-6">
               <p class="text-gray-600">Your recent activities will appear here.</p>
             </div>
           </div>
@@ -31,7 +31,7 @@ import DashboardStats from '../../components/dashboard/DashboardStats.vue';
           <!-- Latest Properties -->
           <div class="mt-8">
             <h2 class="text-lg font-medium text-gray-900 mb-4">Latest Properties</h2>
-            <div class="bg-white rounded-lg shadow-sm p-6">
+            <div class="bg-white rounded-lg shadow-xs p-6">
               <p class="text-gray-600">Your latest property listings will appear here.</p>
             </div>
           </div>

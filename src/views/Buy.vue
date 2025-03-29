@@ -297,7 +297,7 @@ const clearFilters = () => {
   <!-- Rest of the template remains unchanged -->
   <div class="min-h-screen bg-gray-50">
     <!-- Page Header -->
-    <div class="bg-white shadow">
+    <div class="bg-white shadow-sm">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <h1 class="text-3xl font-bold text-gray-900">Properties for Sale</h1>
         <p class="mt-2 text-gray-600">Find your perfect property in Uganda</p>
@@ -308,7 +308,7 @@ const clearFilters = () => {
       <div class="flex flex-col lg:flex-row gap-8">
         <!-- Filters Sidebar -->
         <div :class="[
-          'lg:w-1/4 bg-white rounded-lg shadow-sm p-6',
+          'lg:w-1/4 bg-white rounded-lg shadow-xs p-6',
           showFilters ? 'fixed inset-0 z-40 lg:relative lg:inset-auto' : 'hidden lg:block'
         ]">
           <div class="flex justify-between items-center mb-6">
@@ -344,7 +344,7 @@ const clearFilters = () => {
                 <input type="checkbox"
                        v-model="selectedPropertyTypes"
                        :value="type"
-                       class="rounded border-gray-300 text-primary-600 focus:ring-primary-500" />
+                       class="rounded-sm border-gray-300 text-primary-600 focus:ring-primary-500" />
                 <span class="ml-2 text-sm text-gray-700">{{ type }}</span>
               </label>
             </div>
@@ -374,7 +374,7 @@ const clearFilters = () => {
                 <input type="checkbox"
                        v-model="selectedAmenities"
                        :value="amenity"
-                       class="rounded border-gray-300 text-primary-600 focus:ring-primary-500" />
+                       class="rounded-sm border-gray-300 text-primary-600 focus:ring-primary-500" />
                 <span class="ml-2 text-sm text-gray-700">{{ amenity }}</span>
               </label>
             </div>

@@ -53,7 +53,7 @@ const toggleFilter = () => {
 <template>
   <div class="min-h-screen bg-gray-50">
     <!-- Page Header -->
-    <div class="bg-white shadow">
+    <div class="bg-white shadow-sm">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <h1 class="text-3xl font-bold text-gray-900">Properties for Rent</h1>
         <p class="mt-2 text-gray-600">Find your perfect rental property in Uganda</p>
@@ -64,7 +64,7 @@ const toggleFilter = () => {
       <div class="flex flex-col lg:flex-row gap-8">
         <!-- Filters Sidebar -->
         <div :class="[
-          'lg:w-1/4 bg-white rounded-lg shadow-sm p-6',
+          'lg:w-1/4 bg-white rounded-lg shadow-xs p-6',
           showFilters ? 'fixed inset-0 z-40 lg:relative lg:inset-auto' : 'hidden lg:block'
         ]">
           <PropertyFilters

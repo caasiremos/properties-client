@@ -23,7 +23,7 @@ const goBack = () => {
       <img :src="article.image" 
            :alt="article.title"
            class="w-full h-full object-cover" />
-      <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+      <div class="absolute inset-0 bg-linear-to-t from-black/70 to-transparent"></div>
       <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
         <button @click="goBack" 
                 class="flex items-center text-white mb-4 hover:text-primary-200 transition-colors">
@@ -44,7 +44,7 @@ const goBack = () => {
 
     <!-- Article Content -->
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div class="bg-white rounded-lg shadow-sm p-8">
+      <div class="bg-white rounded-lg shadow-xs p-8">
         <div class="prose prose-lg max-w-none" v-html="article.content"></div>
       </div>
 
@@ -67,28 +67,4 @@ const goBack = () => {
   </div>
 </template>
 
-<style>
-.prose h2 {
-  @apply text-2xl font-bold text-gray-900 mt-8 mb-4;
-}
-
-.prose p {
-  @apply text-gray-700 mb-4 leading-relaxed;
-}
-
-.prose ul, .prose ol {
-  @apply my-4 ml-6;
-}
-
-.prose li {
-  @apply text-gray-700 mb-2;
-}
-
-.prose ul li {
-  @apply list-disc;
-}
-
-.prose ol li {
-  @apply list-decimal;
-}
-</style>
+<style></style>

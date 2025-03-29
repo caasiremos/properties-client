@@ -46,7 +46,7 @@ const handleRegister = async () => {
         alt="Modern property"
         class="absolute inset-0 w-full h-full object-cover"
       />
-      <div class="absolute inset-0 bg-gradient-to-r from-primary-600/90 to-primary-800/90 mix-blend-multiply" />
+      <div class="absolute inset-0 bg-linear-to-r from-primary-600/90 to-primary-800/90 mix-blend-multiply" />
       <div class="absolute inset-0 flex items-center justify-center p-12">
         <div class="text-white text-center">
           <h2 class="text-4xl font-bold mb-4">Join Property256</h2>
@@ -73,7 +73,7 @@ const handleRegister = async () => {
         </div>
 
         <div class="mt-8">
-          <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+          <div class="bg-white py-8 px-4 shadow-sm sm:rounded-lg sm:px-10">
             <form class="space-y-6" @submit.prevent="handleRegister">
               <!-- Name Fields -->
               <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
@@ -87,7 +87,7 @@ const handleRegister = async () => {
                       v-model="formData.firstName"
                       type="text"
                       required
-                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                      class="block w-full rounded-md border-gray-300 shadow-xs focus:border-primary-500 focus:ring-primary-500"
                     />
                   </div>
                 </div>
@@ -102,7 +102,7 @@ const handleRegister = async () => {
                       v-model="formData.lastName"
                       type="text"
                       required
-                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                      class="block w-full rounded-md border-gray-300 shadow-xs focus:border-primary-500 focus:ring-primary-500"
                     />
                   </div>
                 </div>
@@ -119,7 +119,7 @@ const handleRegister = async () => {
                     v-model="formData.email"
                     type="email"
                     required
-                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                    class="block w-full rounded-md border-gray-300 shadow-xs focus:border-primary-500 focus:ring-primary-500"
                   />
                 </div>
               </div>
@@ -134,7 +134,7 @@ const handleRegister = async () => {
                     v-model="formData.phone"
                     type="tel"
                     required
-                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                    class="block w-full rounded-md border-gray-300 shadow-xs focus:border-primary-500 focus:ring-primary-500"
                   />
                 </div>
               </div>
@@ -150,7 +150,7 @@ const handleRegister = async () => {
                     v-model="formData.password"
                     type="password"
                     required
-                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                    class="block w-full rounded-md border-gray-300 shadow-xs focus:border-primary-500 focus:ring-primary-500"
                   />
                 </div>
               </div>
@@ -165,7 +165,7 @@ const handleRegister = async () => {
                     v-model="formData.confirmPassword"
                     type="password"
                     required
-                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                    class="block w-full rounded-md border-gray-300 shadow-xs focus:border-primary-500 focus:ring-primary-500"
                   />
                 </div>
               </div>
@@ -177,7 +177,7 @@ const handleRegister = async () => {
                   v-model="formData.agreeToTerms"
                   type="checkbox"
                   required
-                  class="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                  class="h-4 w-4 rounded-sm border-gray-300 text-primary-600 focus:ring-primary-500"
                 />
                 <label for="agreeToTerms" class="ml-2 block text-sm text-gray-900">
                   I agree to the
@@ -199,7 +199,7 @@ const handleRegister = async () => {
                 <button
                   type="submit"
                   :disabled="isLoading"
-                  class="flex w-full justify-center rounded-md border border-transparent bg-primary-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  class="flex w-full justify-center rounded-md border border-transparent bg-primary-600 py-2 px-4 text-sm font-medium text-white shadow-xs hover:bg-primary-700 focus:outline-hidden focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <span v-if="isLoading">Creating account...</span>
                   <span v-else>Create account</span>
@@ -219,7 +219,7 @@ const handleRegister = async () => {
 
               <div class="mt-6 grid grid-cols-2 gap-3">
                 <button
-                  class="flex w-full items-center justify-center gap-3 rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+                  class="flex w-full items-center justify-center gap-3 rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:outline-hidden focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
                 >
                   <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"/>
@@ -227,7 +227,7 @@ const handleRegister = async () => {
                   <span>Google</span>
                 </button>
                 <button
-                  class="flex w-full items-center justify-center gap-3 rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+                  class="flex w-full items-center justify-center gap-3 rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:outline-hidden focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
                 >
                   <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>

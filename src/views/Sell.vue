@@ -53,7 +53,7 @@ const benefits = [
         </div>
 
         <!-- Valuation Form -->
-        <div class="bg-white rounded-lg shadow-sm p-6">
+        <div class="bg-white rounded-lg shadow-xs p-6">
           <h2 class="text-2xl font-bold text-gray-900 mb-6">Get a Free Property Valuation</h2>
           <PropertyValuationForm />
         </div>

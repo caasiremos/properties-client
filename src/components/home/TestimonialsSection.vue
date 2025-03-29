@@ -51,7 +51,7 @@ const testimonials = [
         class="testimonials-swiper"
       >
         <swiper-slide v-for="testimonial in testimonials" :key="testimonial.id">
-          <div class="bg-gray-50 p-6 rounded-lg shadow-sm">
+          <div class="bg-gray-50 p-6 rounded-lg shadow-xs">
             <div class="flex items-center mb-4">
               <img
                 :src="testimonial.image"

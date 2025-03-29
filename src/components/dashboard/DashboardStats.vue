@@ -43,10 +43,10 @@ const stats = [
     <div
       v-for="stat in stats"
       :key="stat.name"
-      class="bg-white px-6 py-5 rounded-lg shadow-sm"
+      class="bg-white px-6 py-5 rounded-lg shadow-xs"
     >
       <div class="flex items-center">
-        <div class="flex-shrink-0">
+        <div class="shrink-0">
           <component
             :is="stat.icon"
             class="h-6 w-6 text-primary-600"

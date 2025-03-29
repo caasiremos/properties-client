@@ -42,8 +42,8 @@ const handleSearch = () => {
   <section class="relative h-[700px]">
     <!-- Hero Background with Enhanced Overlay -->
     <div class="absolute inset-0">
-      <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/60 to-black/70"></div>
-      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+      <div class="absolute inset-0 bg-linear-to-r from-black/70 via-black/60 to-black/70"></div>
+      <div class="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent"></div>
       <img
         src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c"
         class="w-full h-full object-cover"
@@ -63,13 +63,13 @@ const handleSearch = () => {
       </div>
 
       <!-- Search Form -->
-      <div class="bg-white/95 backdrop-blur-sm rounded-xl shadow-xl p-6 max-w-4xl mx-auto w-full">
+      <div class="bg-white/95 backdrop-blur-xs rounded-xl shadow-xl p-6 max-w-4xl mx-auto w-full">
         <!-- Main Search Fields -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Property Type</label>
             <select v-model="selectedType" 
-                    class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 bg-white">
+                    class="block w-full rounded-lg border-gray-300 shadow-xs focus:border-primary-500 focus:ring-primary-500 bg-white">
               <option v-for="type in propertyTypes" :key="type" :value="type">
                 {{ type }}
               </option>
@@ -78,7 +78,7 @@ const handleSearch = () => {
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Purpose</label>
             <select v-model="selectedPurpose"
-                    class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 bg-white">
+                    class="block w-full rounded-lg border-gray-300 shadow-xs focus:border-primary-500 focus:ring-primary-500 bg-white">
               <option v-for="purpose in purposes" :key="purpose" :value="purpose">
                 {{ purpose }}
               </option>
@@ -89,7 +89,7 @@ const handleSearch = () => {
             <input type="text"
                    v-model="location"
                    placeholder="Enter location"
-                   class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 placeholder-gray-400" />
+                   class="block w-full rounded-lg border-gray-300 shadow-xs focus:border-primary-500 focus:ring-primary-500 placeholder-gray-400" />
           </div>
           <div class="flex flex-col justify-end">
             <button @click="handleSearch"
@@ -131,11 +131,11 @@ const handleSearch = () => {
                 <input type="number" 
                        v-model="minPrice"
                        placeholder="Min Price"
-                       class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 placeholder-gray-400" />
+                       class="block w-full rounded-lg border-gray-300 shadow-xs focus:border-primary-500 focus:ring-primary-500 placeholder-gray-400" />
                 <input type="number"
                        v-model="maxPrice"
                        placeholder="Max Price"
-                       class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 placeholder-gray-400" />
+                       class="block w-full rounded-lg border-gray-300 shadow-xs focus:border-primary-500 focus:ring-primary-500 placeholder-gray-400" />
               </div>
             </div>
 
@@ -144,7 +144,7 @@ const handleSearch = () => {
               <label class="block text-sm font-medium text-gray-700">{{ feature.label }}</label>
               <select v-if="feature.id !== 'amenities'"
                       v-model="selectedFilters[feature.id]"
-                      class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 bg-white">
+                      class="block w-full rounded-lg border-gray-300 shadow-xs focus:border-primary-500 focus:ring-primary-500 bg-white">
                 <option value="">Any</option>
                 <option v-for="option in feature.options" :key="option" :value="option">
                   {{ option }}
@@ -157,7 +157,7 @@ const handleSearch = () => {
                   <input type="checkbox"
                          :value="option"
                          v-model="selectedFilters.amenities"
-                         class="rounded border-gray-300 text-primary-600 focus:ring-primary-500" />
+                         class="rounded-sm border-gray-300 text-primary-600 focus:ring-primary-500" />
                   <span class="text-sm text-gray-700">{{ option }}</span>
                 </label>
               </div>
