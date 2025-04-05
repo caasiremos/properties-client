@@ -6,8 +6,8 @@ import axios from '@/libs/axios';
 
 const router = useRouter();
 const route = useRoute();
-const email = ref('fred@ensibuuko.com');
-const password = ref('7520060318@Bct!');
+const email = ref('');
+const password = ref('');
 const rememberMe = ref(false);
 const isLoading = ref(false);
 const error = ref('');
@@ -30,7 +30,7 @@ const handleLogin = async () => {
       email: email.value,
       password: password.value,
     });
-    
+
     localStorage.setItem('ACCESS_TOKEN', response.data.data.access_token);
     
     // Redirect to dashboard
