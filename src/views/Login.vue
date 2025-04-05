@@ -25,6 +25,7 @@ const handleLogin = async () => {
   try {
     isLoading.value = true;
     error.value = '';
+    successMessage.value = '';
 
     const response = await axios.post('/api/agents/login', {
       email: email.value,
@@ -32,12 +33,14 @@ const handleLogin = async () => {
     });
 
     localStorage.setItem('ACCESS_TOKEN', response.data.data.access_token);
+    console.log('response.data.data', response.data.data.agent);
+    localStorage.setItem('USERDATA', JSON.stringify(response.data.data.agent));
     
     // Redirect to dashboard
     router.push('/dashboard');
   } catch (err) {
-    console.log('error', err);
-    // error.value = err.response.data.meta.message;
+    console.log('error', err.response.data.meta.message);
+    error.value = err.response.data.meta.message;
   } finally {
     isLoading.value = false;
   }
