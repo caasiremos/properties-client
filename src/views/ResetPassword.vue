@@ -1,31 +1,76 @@
-
 <script setup>
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { HomeIcon } from '@heroicons/vue/24/outline';
 import axios from '@/libs/axios';
 
 const router = useRouter();
+const route = useRoute();
 const email = ref('');
+const newPassword = ref('');
+const confirmPassword = ref('');
 const isLoading = ref(false);
 const error = ref('');
 const successMessage = ref('');
+const showPassword = ref(false);
+const showConfirmPassword = ref(false);
+
+const validatePassword = (password) => {
+  const minLength = 8;
+  const hasUpperCase = /[A-Z]/.test(password);
+  const hasLowerCase = /[a-z]/.test(password);
+  const hasNumbers = /\d/.test(password);
+  const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+  
+  return {
+    isValid: password.length >= minLength && hasUpperCase && hasLowerCase && hasNumbers && hasSpecialChar,
+    requirements: {
+      minLength: password.length >= minLength,
+      hasUpperCase,
+      hasLowerCase,
+      hasNumbers,
+      hasSpecialChar
+    }
+  };
+};
 
 const handleResetPassword = async () => {
   try {
+    if (newPassword.value !== confirmPassword.value) {
+      error.value = 'Passwords do not match';
+      return;
+    }
+
+    const passwordValidation = validatePassword(newPassword.value);
+    if (!passwordValidation.isValid) {
+      error.value = 'Password does not meet requirements';
+      return;
+    }
+
     isLoading.value = true;
     error.value = '';
     successMessage.value = '';
 
-    const response = await axios.post('/api/agents/forgot-password', {
-      email: email.value
+    const { token, email } = route.query;
+
+
+    const response = await axios.post('/api/agents/reset-password', {
+      email: email,
+      password: newPassword.value,
+      password_confirmation: confirmPassword.value,
+      token: token
     });
 
-    successMessage.value = 'Password reset instructions have been sent to your email.';
-    email.value = '';
+    successMessage.value = 'Password has been reset successfully. You can now login with your new password.';
+
+    router.push({
+      path: '/login',
+      query: { message: successMessage.value }
+    });
+
   } catch (err) {
     console.log('err', err.response);
-    error.value = 'Failed to send reset instructions. Please try again.';
+    error.value = err.response?.data?.message || 'Failed to reset password. Please try again.';
   } finally {
     isLoading.value = false;
   }
@@ -99,10 +144,10 @@ const handleResetPassword = async () => {
           </div>
 
           <h2 class="text-3xl font-bold tracking-tight text-gray-900 mb-2">
-            Forgot Password?
+            Reset Password
           </h2>
           <p class="mt-2 text-sm text-gray-600">
-            Enter your email address and we'll send you instructions to reset your password.
+            Enter your new password.
           </p>
         </div>
 
@@ -117,22 +162,62 @@ const handleResetPassword = async () => {
               {{ successMessage }}
             </div>
 
-            <!-- Email Field -->
-            <div class="relative">
+            <!-- New Password Field -->
+            <div class="relative group">
+              <div class="absolute inset-0 bg-gradient-to-r from-primary-500/20 to-primary-600/20 rounded-lg blur-sm group-hover:blur-md transition-all duration-300"></div>
               <input
-                id="email"
-                v-model="email"
-                type="email"
+                id="newPassword"
+                v-model="newPassword"
+                :type="showPassword ? 'text' : 'password'"
                 required
                 placeholder=" "
-                class="peer block w-full rounded-lg border-2 border-gray-300 px-4 pt-5 pb-2 text-gray-900 focus:border-primary-500 focus:ring-0 focus:outline-none transition-colors duration-200"
+                class="peer block w-full rounded-lg border-2 border-gray-300 px-4 pt-5 pb-2 text-gray-900 focus:border-primary-500 focus:ring-0 focus:outline-none transition-all duration-300 bg-white/80 backdrop-blur-sm group-hover:bg-white/90"
               />
               <label
-                for="email"
-                class="absolute left-4 top-4 z-10 origin-[0] -translate-y-3 scale-75 transform text-gray-500 duration-200 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75 peer-focus:text-primary-500"
+                for="newPassword"
+                class="absolute left-4 top-4 z-10 origin-[0] -translate-y-3 scale-75 transform text-gray-500 duration-200 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75 peer-focus:text-primary-500 peer-focus:font-medium"
               >
-                Email address
+                New Password
               </label>
+              <button
+                type="button"
+                @click="showPassword = !showPassword"
+                class="absolute right-4 top-4 text-gray-400 hover:text-primary-500 transition-colors duration-200"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+              </button>
+            </div>
+
+            <!-- Confirm Password Field -->
+            <div class="relative group">
+              <div class="absolute inset-0 bg-gradient-to-r from-primary-500/20 to-primary-600/20 rounded-lg blur-sm group-hover:blur-md transition-all duration-300"></div>
+              <input
+                id="confirmPassword"
+                v-model="confirmPassword"
+                :type="showConfirmPassword ? 'text' : 'password'"
+                required
+                placeholder=" "
+                class="peer block w-full rounded-lg border-2 border-gray-300 px-4 pt-5 pb-2 text-gray-900 focus:border-primary-500 focus:ring-0 focus:outline-none transition-all duration-300 bg-white/80 backdrop-blur-sm group-hover:bg-white/90"
+              />
+              <label
+                for="confirmPassword"
+                class="absolute left-4 top-4 z-10 origin-[0] -translate-y-3 scale-75 transform text-gray-500 duration-200 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75 peer-focus:text-primary-500 peer-focus:font-medium"
+              >
+                Confirm New Password
+              </label>
+              <button
+                type="button"
+                @click="showConfirmPassword = !showConfirmPassword"
+                class="absolute right-4 top-4 text-gray-400 hover:text-primary-500 transition-colors duration-200"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+              </button>
             </div>
 
             <div>
@@ -146,9 +231,9 @@ const handleResetPassword = async () => {
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
-                  Sending instructions...
+                  Resetting password...
                 </span>
-                <span v-else>Send Reset Instructions</span>
+                <span v-else>Reset Password</span>
               </button>
             </div>
 

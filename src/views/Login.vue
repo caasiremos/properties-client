@@ -1,27 +1,43 @@
 <script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, onMounted } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 import { HomeIcon } from '@heroicons/vue/24/outline';
+import axios from '@/libs/axios';
 
 const router = useRouter();
-const email = ref('');
-const password = ref('');
+const route = useRoute();
+const email = ref('fred@ensibuuko.com');
+const password = ref('7520060318@Bct!');
 const rememberMe = ref(false);
 const isLoading = ref(false);
 const error = ref('');
+const successMessage = ref('');
+
+onMounted(() => {
+  if (route.query.message) {
+    successMessage.value = route.query.message;
+    // Clear the message from URL after displaying
+    router.replace({ query: {} });
+  }
+});
 
 const handleLogin = async () => {
   try {
     isLoading.value = true;
     error.value = '';
+
+    const response = await axios.post('/api/agents/login', {
+      email: email.value,
+      password: password.value,
+    });
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    localStorage.setItem('ACCESS_TOKEN', response.data.data.access_token);
     
     // Redirect to dashboard
     router.push('/dashboard');
   } catch (err) {
-    error.value = 'Invalid email or password';
+    console.log('error', err);
+    // error.value = err.response.data.meta.message;
   } finally {
     isLoading.value = false;
   }
@@ -95,6 +111,20 @@ const handleLogin = async () => {
               Create one now
             </router-link>
           </p>
+        </div>
+
+        <!-- Success Message -->
+        <div v-if="successMessage" class="mt-4 rounded-md bg-green-50 p-4">
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <div class="ml-3">
+              <p class="text-sm font-medium text-green-800">{{ successMessage }}</p>
+            </div>
+          </div>
         </div>
 
         <div class="mt-8">

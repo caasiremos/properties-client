@@ -6,7 +6,7 @@ import TheFooter from './components/layout/TheFooter.vue';
 
 const route = useRoute();
 
-const authPages = ['/login', '/register', '/forgot-password'];
+const authPages = ['/login', '/register', '/forgot-password', '/reset-password', '/verify-email'];
 
 const showHeader = computed(() => {
   return !route.path.startsWith('/dashboard') && !authPages.includes(route.path);

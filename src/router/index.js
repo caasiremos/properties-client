@@ -10,6 +10,8 @@ import Login from '../views/Login.vue';
 import Register from '../views/Register.vue';
 import Dashboard from '../views/dashboard/Dashboard.vue';
 import ForgotPassword from '../views/ForgotPassword.vue';
+import ResetPassword from '../views/ResetPassword.vue';
+import EmailVerified from '../views/EmailVerified.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -88,11 +90,27 @@ const router = createRouter({
       }
     },
     {
+      path: '/verify-email',
+      name: 'verify-email',
+      component: EmailVerified,
+      meta: {
+        title: 'Email Verified'
+      }
+    },
+    {
       path: '/forgot-password',
       name: 'forgot-password',
       component: ForgotPassword,
       meta: {
         title: 'Forgot Password'
+      }
+    },
+    {
+      path: '/reset-password',
+      name: 'reset-password',
+      component: ResetPassword,
+      meta: {
+        title: 'Reset Password'
       }
     },
     {

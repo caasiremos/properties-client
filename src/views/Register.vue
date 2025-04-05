@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { HomeIcon } from '@heroicons/vue/24/outline';
 import PhoneNumber from '../components/PhoneNumber.vue';
+import axios from '@/libs/axios';
 
 const router = useRouter();
 const formData = ref({
@@ -19,13 +20,20 @@ const handleRegister = async () => {
   try {
     isLoading.value = true;
     error.value = '';
-    
-    // TODO: Implement actual registration logic
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    router.push('/');
+
+    const response = await axios.post('/api/agents/register', {
+      name: formData.value.fullName,
+      email: formData.value.email,
+      phone_number: formData.value.phone,
+      password: formData.value.password,
+    });
+
+    router.push({
+      path: '/login',
+      query: { message: response.data.metadata }
+    });
   } catch (err) {
-    error.value = 'Registration failed. Please try again.';
+    error.value = err.response.data.meta.message || 'Registration failed. Please try again.';
   } finally {
     isLoading.value = false;
   }
