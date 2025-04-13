@@ -48,30 +48,6 @@ export const rentalProperties = [
     amenities: ['Swimming Pool', 'Gym', 'Security']
   },
   {
-    id: 5,
-    title: 'Cozy Studio in Muyenga',
-    price: 700,
-    location: 'Muyenga, Kampala',
-    bedrooms: 1,
-    bathrooms: 1,
-    area: 500,
-    image: 'https://images.unsplash.com/photo-1522156373667-4c7234bbd804',
-    type: 'Studio',
-    amenities: ['Security', 'Internet']
-  },
-  {
-    id: 6,
-    title: 'Luxury Penthouse in Naguru',
-    price: 3500,
-    location: 'Naguru, Kampala',
-    bedrooms: 4,
-    bathrooms: 3,
-    area: 2200,
-    image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00',
-    type: 'Penthouse',
-    amenities: ['Swimming Pool', 'Gym', 'Security', 'Parking']
-  },
-  {
     id: 7,
     title: 'Office Space in CBD',
     price: 2000,
@@ -106,18 +82,6 @@ export const rentalProperties = [
     image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
     type: 'House',
     amenities: ['Garden', 'Security', 'Parking']
-  },
-  {
-    id: 10,
-    title: 'Student Apartment in Makerere',
-    price: 500,
-    location: 'Makerere, Kampala',
-    bedrooms: 1,
-    bathrooms: 1,
-    area: 400,
-    image: 'https://images.unsplash.com/photo-1522156373667-4c7234bbd804',
-    type: 'Studio',
-    amenities: ['Security', 'Internet']
   },
   {
     id: 11,
@@ -180,18 +144,6 @@ export const rentalProperties = [
     amenities: ['Furnished', 'Security', 'Parking']
   },
   {
-    id: 16,
-    title: 'Studio with City View',
-    price: 900,
-    location: 'Nakasero, Kampala',
-    bedrooms: 1,
-    bathrooms: 1,
-    area: 550,
-    image: 'https://images.unsplash.com/photo-1522156373667-4c7234bbd804',
-    type: 'Studio',
-    amenities: ['Security', 'Internet']
-  },
-  {
     id: 17,
     title: 'Corporate Office Suite',
     price: 2500,
@@ -214,18 +166,6 @@ export const rentalProperties = [
     image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688',
     type: 'Apartment',
     amenities: ['Security', 'Parking']
-  },
-  {
-    id: 19,
-    title: 'Student Housing in Kyambogo',
-    price: 400,
-    location: 'Kyambogo, Kampala',
-    bedrooms: 1,
-    bathrooms: 1,
-    area: 300,
-    image: 'https://images.unsplash.com/photo-1522156373667-4c7234bbd804',
-    type: 'Studio',
-    amenities: ['Security', 'Internet']
   },
   {
     id: 20,

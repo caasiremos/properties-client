@@ -1,14 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import AgentLayout from '../layouts/AgentLayout.vue';
+import GuestLayout from '../layouts/GuestLayout.vue';
 import Home from '../views/Home.vue';
 import Buy from '../views/Buy.vue';
 import Rent from '../views/Rent.vue';
 import Sell from '../views/Sell.vue';
 import Agents from '../views/Agents.vue';
+import Properties from '../views/Agents/Properties.vue';
+import CreateProperty from '../views/Agents/CreateProperty.vue';
 import News from '../views/News.vue';
 import ArticleDetail from '../views/ArticleDetail.vue';
 import Login from '../views/Login.vue';
 import Register from '../views/Register.vue';
-import Dashboard from '../views/dashboard/Dashboard.vue';
+import Dashboard from '../views/Agents/Dashboard.vue';
 import ForgotPassword from '../views/ForgotPassword.vue';
 import ResetPassword from '../views/ResetPassword.vue';
 import EmailVerified from '../views/EmailVerified.vue';
@@ -17,63 +21,7 @@ import { useStorage } from '@vueuse/core';
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: Home,
-      meta: {
-        title: 'Home'
-      }
-    },
-    {
-      path: '/buy',
-      name: 'buy',
-      component: Buy,
-      meta: {
-        title: 'Buy'
-      }
-    },
-    {
-      path: '/rent',
-      name: 'rent',
-      component: Rent,
-      meta: {
-        title: 'Rent'
-      }
-    },
-    {
-      path: '/sell',
-      name: 'sell',
-      component: Sell,
-      meta: {
-        title: 'Sell'
-      }
-    },
-    {
-      path: '/agents',
-      name: 'agents',
-      component: Agents,
-      meta: {
-        title: 'Agents'
-      }
-    },
-    {
-      path: '/news',
-      name: 'news',
-      component: News,
-      meta: {
-        title: 'News'
-      }
-    },
-    {
-      path: '/news/:id',
-      name: 'article-detail',
-      component: ArticleDetail,
-      props: true,
-      meta: {
-        title: 'Article Detail'
-      }
-    },
+    // Auth Routes
     {
       path: '/login',
       name: 'login',
@@ -114,14 +62,34 @@ const router = createRouter({
         title: 'Reset Password'
       }
     },
+
+    // Guest Routes
     {
-      path: '/dashboard',
-      name: 'dashboard',
-      component: Dashboard,
-      meta: {
-        title: 'Dashboard'
-      }
-    }
+      path: '/',
+      component: GuestLayout,
+      meta: { requiresAuth: false },
+      children: [
+        { path: '', component: Home },
+        { path: 'buy', component: Buy },
+        { path: 'rent', component: Rent },
+        { path: 'sell', component: Sell },
+        { path: 'agents', component: Agents },
+        { path: 'news', component: News },
+        { path: 'news/:id', component: ArticleDetail },
+      ]
+    },
+    // Agent Routes
+    {
+      path: '/agent',
+      component: AgentLayout,
+      meta: { requiresAuth: true },
+      children: [
+        { path: '', component: Dashboard },
+        { path: 'properties', component: Properties },
+        { path: 'properties/create', component: CreateProperty },
+        // { path: 'properties/:id/edit', component: EditProperty },
+      ]
+    },
   ]
 });
 
@@ -133,25 +101,20 @@ const isAuthenticated = () => {
 
 // Navigation guard to protect routes
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/', '/buy', '/rent', '/sell', '/agents', '/news', '/news/:id'];
-  const authPages = ['/login', '/register', '/forgot-password', '/reset-password'];
-  const authRequired = !publicPages.includes(to.path);
-  const isAuthPage = authPages.includes(to.path);
-  
-  // Update document title
-  document.title = `FindProperty 24 | ${to.meta.title || ''}`;
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
 
-  // If route requires auth and user is not authenticated
-  if (authRequired && !isAuthenticated()) {
-    return next('/login');
+  // Redirect authenticated users away from public routes
+  if (!requiresAuth && isAuthenticated()) {
+    return next(`/agent`)
   }
 
-  // If user is authenticated and tries to access auth pages
-  if (isAuthPage && isAuthenticated()) {
-    return next('/dashboard');
+  // Redirect unauthenticated users to login
+  if (requiresAuth && !isAuthenticated()) {
+    return next('/login')
   }
 
-  next();
-});
+  // Proceed with navigation
+  next()
+})
 
 export default router;
