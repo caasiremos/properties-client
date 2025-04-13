@@ -12,6 +12,7 @@ import Dashboard from '../views/dashboard/Dashboard.vue';
 import ForgotPassword from '../views/ForgotPassword.vue';
 import ResetPassword from '../views/ResetPassword.vue';
 import EmailVerified from '../views/EmailVerified.vue';
+import { useStorage } from '@vueuse/core';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -124,9 +125,32 @@ const router = createRouter({
   ]
 });
 
-// Navigation guard to update the document title
+// Check if user is authenticated
+const isAuthenticated = () => {
+  const token = useStorage('ACCESS_TOKEN');
+  return !!token.value;
+};
+
+// Navigation guard to protect routes
 router.beforeEach((to, from, next) => {
+  const publicPages = ['/', '/buy', '/rent', '/sell', '/agents', '/news', '/news/:id'];
+  const authPages = ['/login', '/register', '/forgot-password', '/reset-password'];
+  const authRequired = !publicPages.includes(to.path);
+  const isAuthPage = authPages.includes(to.path);
+  
+  // Update document title
   document.title = `FindProperty 24 | ${to.meta.title || ''}`;
+
+  // If route requires auth and user is not authenticated
+  if (authRequired && !isAuthenticated()) {
+    return next('/login');
+  }
+
+  // If user is authenticated and tries to access auth pages
+  if (isAuthPage && isAuthenticated()) {
+    return next('/dashboard');
+  }
+
   next();
 });
 

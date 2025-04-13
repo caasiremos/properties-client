@@ -1,6 +1,11 @@
 <script setup>
 import { ref } from 'vue';
 import { BellIcon, UserCircleIcon } from '@heroicons/vue/24/outline';
+import { useStorage } from '@vueuse/core';
+
+const userData = useStorage('USERDATA');
+
+const user = JSON.parse(userData.value);
 
 const notifications = ref([
   {
@@ -38,35 +43,6 @@ const toggleUserMenu = () => {
         <h1 class="text-2xl font-semibold text-gray-900">Dashboard</h1>
 
         <div class="flex items-center space-x-4">
-          <!-- Notifications -->
-          <div class="relative">
-            <button
-              @click="toggleNotifications"
-              class="p-2 text-gray-500 rounded-full hover:bg-gray-100 focus:outline-hidden"
-            >
-              <BellIcon class="w-6 h-6" />
-              <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
-            </button>
-
-            <!-- Notifications Dropdown -->
-            <div
-              v-if="showNotifications"
-              class="absolute right-0 w-80 mt-2 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5"
-            >
-              <div class="py-2">
-                <div
-                  v-for="notification in notifications"
-                  :key="notification.id"
-                  class="px-4 py-3 hover:bg-gray-50"
-                >
-                  <p class="text-sm font-medium text-gray-900">{{ notification.title }}</p>
-                  <p class="text-sm text-gray-600">{{ notification.message }}</p>
-                  <p class="text-xs text-gray-500 mt-1">{{ notification.time }}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <!-- User Menu -->
           <div class="relative">
             <button
@@ -74,7 +50,7 @@ const toggleUserMenu = () => {
               class="flex items-center space-x-2 text-gray-700 hover:text-gray-900 focus:outline-hidden"
             >
               <UserCircleIcon class="w-8 h-8" />
-              <span class="text-sm font-medium">John Doe</span>
+              <span class="text-sm font-medium">{{ user.name }}</span>
             </button>
 
             <!-- User Dropdown -->
