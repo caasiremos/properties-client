@@ -8,6 +8,7 @@ import Sell from '../views/Sell.vue';
 import Agents from '../views/Agents.vue';
 import Properties from '../views/Agents/Properties.vue';
 import CreateProperty from '../views/Agents/CreateProperty.vue';
+import Wallet from '../views/Agents/Wallet.vue';
 import News from '../views/News.vue';
 import ArticleDetail from '../views/ArticleDetail.vue';
 import Login from '../views/Login.vue';
@@ -87,6 +88,7 @@ const router = createRouter({
         { path: '', component: Dashboard },
         { path: 'properties', component: Properties },
         { path: 'properties/create', component: CreateProperty },
+        { path: 'wallet', component: Wallet },
         // { path: 'properties/:id/edit', component: EditProperty },
       ]
     },

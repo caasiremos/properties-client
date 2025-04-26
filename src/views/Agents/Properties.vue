@@ -1,3 +1,77 @@
+<script setup>
+import { ref, onMounted, computed } from 'vue';
+import { useToast } from 'vue-toastification';
+import { rentalProperties } from '@/data/rentalProperties.js';
+
+const properties = ref([]);
+const loading = ref(false);
+const searchQuery = ref('');
+const filterStatus = ref('');
+const toast = useToast();
+
+const filteredProperties = computed(() => {
+    let result = [...rentalProperties];
+    
+    // Apply search filter
+    if (searchQuery.value) {
+        const searchTerm = searchQuery.value.toLowerCase();
+        result = result.filter(property => 
+            property.title.toLowerCase().includes(searchTerm) ||
+            property.location.toLowerCase().includes(searchTerm) ||
+            property.type.toLowerCase().includes(searchTerm)
+        );
+    }
+    
+    // Apply status filter
+    if (filterStatus.value) {
+        result = result.filter(property => 
+            property.status?.toLowerCase() === filterStatus.value.toLowerCase()
+        );
+    }
+    
+    return result;
+});
+
+const handleSearch = () => {
+    // No need to fetch, computed property will handle filtering
+};
+
+const handleFilter = () => {
+    // No need to fetch, computed property will handle filtering
+};
+
+const deleteProperty = async (propertyId) => {
+    if (!confirm('Are you sure you want to delete this property?')) return;
+
+    try {
+        // Simulate deletion by filtering out the property
+        properties.value = properties.value.filter(p => p.id !== propertyId);
+        toast.success('Property deleted successfully');
+    } catch (error) {
+        toast.error('Failed to delete property');
+        console.error('Error deleting property:', error);
+    }
+};
+
+const formatPrice = (price) => {
+    return new Intl.NumberFormat('en-US').format(price);
+};
+
+const getStatusClass = (status) => {
+    const classes = {
+        available: 'bg-green-100 text-green-800',
+        sold: 'bg-red-100 text-red-800',
+        rented: 'bg-blue-100 text-blue-800'
+    };
+    return classes[status?.toLowerCase()] || 'bg-gray-100 text-gray-800';
+};
+
+onMounted(() => {
+    // Initialize with rental properties data
+    properties.value = rentalProperties;
+});
+</script>
+
 <template>
     <div class="container mx-auto px-4 py-8">
         <!-- Header Section with Gradient Background -->
@@ -5,7 +79,7 @@
             <div class="max-w-7xl mx-auto px-6 py-8">
                 <div class="flex flex-col md:flex-row justify-between items-center">
                     <div>
-                        <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">My Properties</h1>
+                        <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">Properties</h1>
                         <p class="text-primary-100">Manage your property listings</p>
                     </div>
                     <router-link 
@@ -184,77 +258,3 @@
         </div>
     </div>
 </template>
-
-<script setup>
-import { ref, onMounted, computed } from 'vue';
-import { useToast } from 'vue-toastification';
-import { rentalProperties } from '@/data/rentalProperties.js';
-
-const properties = ref([]);
-const loading = ref(false);
-const searchQuery = ref('');
-const filterStatus = ref('');
-const toast = useToast();
-
-const filteredProperties = computed(() => {
-    let result = [...rentalProperties];
-    
-    // Apply search filter
-    if (searchQuery.value) {
-        const searchTerm = searchQuery.value.toLowerCase();
-        result = result.filter(property => 
-            property.title.toLowerCase().includes(searchTerm) ||
-            property.location.toLowerCase().includes(searchTerm) ||
-            property.type.toLowerCase().includes(searchTerm)
-        );
-    }
-    
-    // Apply status filter
-    if (filterStatus.value) {
-        result = result.filter(property => 
-            property.status?.toLowerCase() === filterStatus.value.toLowerCase()
-        );
-    }
-    
-    return result;
-});
-
-const handleSearch = () => {
-    // No need to fetch, computed property will handle filtering
-};
-
-const handleFilter = () => {
-    // No need to fetch, computed property will handle filtering
-};
-
-const deleteProperty = async (propertyId) => {
-    if (!confirm('Are you sure you want to delete this property?')) return;
-
-    try {
-        // Simulate deletion by filtering out the property
-        properties.value = properties.value.filter(p => p.id !== propertyId);
-        toast.success('Property deleted successfully');
-    } catch (error) {
-        toast.error('Failed to delete property');
-        console.error('Error deleting property:', error);
-    }
-};
-
-const formatPrice = (price) => {
-    return new Intl.NumberFormat('en-US').format(price);
-};
-
-const getStatusClass = (status) => {
-    const classes = {
-        available: 'bg-green-100 text-green-800',
-        sold: 'bg-red-100 text-red-800',
-        rented: 'bg-blue-100 text-blue-800'
-    };
-    return classes[status?.toLowerCase()] || 'bg-gray-100 text-gray-800';
-};
-
-onMounted(() => {
-    // Initialize with rental properties data
-    properties.value = rentalProperties;
-});
-</script>

@@ -13,6 +13,10 @@ defineProps({
     required: {
         type: Boolean,
         default: false
+    },
+    spacing: {
+        type: String,
+        default: 'px-4 py-3'
     }
 });
 
@@ -71,8 +75,8 @@ const updatePhone = () => {
 <template>
     <div>
         <input type="tel" id="phone" v-model="phone"
-            class="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-md shadow-xs placeholder-gray-400 focus:outline-hidden focus:ring-primary-500 focus:border-primary-500"
-            :class="{ 'border-2 border-red-500': !!phoneError }"
+            class="appearance-none block w-full border border-gray-300 rounded-md shadow-xs placeholder-gray-400 focus:outline-hidden focus:ring-primary-500 focus:border-primary-500"
+            :class="[spacing, { 'border-2 border-red-500': !!phoneError }]"
             @input="updatePhone" required />
     </div>
 </template>

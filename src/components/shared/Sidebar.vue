@@ -7,7 +7,8 @@ import {
   HeartIcon,
   DocumentTextIcon,
   CogIcon,
-  ArrowLeftOnRectangleIcon
+  ArrowLeftOnRectangleIcon,
+  WalletIcon
 } from '@heroicons/vue/24/outline';
 import { useRouter } from 'vue-router';
 import axios from '@/libs/axios';
@@ -16,10 +17,10 @@ const router = useRouter();
 
 const navigation = [
   { name: 'Dashboard', icon: HomeIcon, href: '/agent' },
-  { name: 'My Properties', icon: BuildingOfficeIcon, href: '/agent/properties' },
+  { name: 'Properties', icon: BuildingOfficeIcon, href: '/agent/properties' },
+  { name: 'Wallet', icon: WalletIcon, href: '/agent/wallet' },
   { name: 'My Clients', icon: UserGroupIcon, href: '/agent/clients' },
   { name: 'Saved Properties', icon: HeartIcon, href: '/agent/saved' },
-  { name: 'Documents', icon: DocumentTextIcon, href: '/agent/documents' },
   { name: 'Settings', icon: CogIcon, href: '/agent/settings' },
 ];
 
@@ -42,9 +43,6 @@ const handleLogout = async () => {
     <div class="p-6">
       <router-link to="/" class="flex flex-col items-center group">
         <div class="flex items-center space-x-1">
-          <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-          </svg>
           <span class="text-2xl font-bold bg-gradient-to-r from-primary-600 via-primary-500 to-primary-700 bg-clip-text text-transparent tracking-tight">
             Find<span class="text-primary-900">Property</span><span class="text-primary-600 font-extrabold">24</span>
           </span>
