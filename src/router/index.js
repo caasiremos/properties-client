@@ -18,6 +18,7 @@ import ForgotPassword from '../views/ForgotPassword.vue';
 import ResetPassword from '../views/ResetPassword.vue';
 import EmailVerified from '../views/EmailVerified.vue';
 import { useStorage } from '@vueuse/core';
+import Profile from '../views/Agents/Profile.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -89,6 +90,7 @@ const router = createRouter({
         { path: 'properties', component: Properties },
         { path: 'properties/create', component: CreateProperty },
         { path: 'wallet', component: Wallet },
+        { path: 'profile', component: Profile },
         // { path: 'properties/:id/edit', component: EditProperty },
       ]
     },

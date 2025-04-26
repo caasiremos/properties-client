@@ -8,7 +8,8 @@ import {
   DocumentTextIcon,
   CogIcon,
   ArrowLeftOnRectangleIcon,
-  WalletIcon
+  WalletIcon,
+  UserCircleIcon
 } from '@heroicons/vue/24/outline';
 import { useRouter } from 'vue-router';
 import axios from '@/libs/axios';
@@ -17,11 +18,12 @@ const router = useRouter();
 
 const navigation = [
   { name: 'Dashboard', icon: HomeIcon, href: '/agent' },
-  { name: 'Properties', icon: BuildingOfficeIcon, href: '/agent/properties' },
-  { name: 'Wallet', icon: WalletIcon, href: '/agent/wallet' },
+  { name: 'My Properties', icon: BuildingOfficeIcon, href: '/agent/properties' },
+  { name: 'Post a Property', icon: DocumentTextIcon, href: '/agent/properties/create' },
+  { name: 'My Wallet', icon: WalletIcon, href: '/agent/wallet' },
   { name: 'My Clients', icon: UserGroupIcon, href: '/agent/clients' },
   { name: 'Saved Properties', icon: HeartIcon, href: '/agent/saved' },
-  { name: 'Settings', icon: CogIcon, href: '/agent/settings' },
+  { name: 'Profile', icon: UserCircleIcon, href: '/agent/profile' },
 ];
 
 const handleLogout = async () => {

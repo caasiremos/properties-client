@@ -94,11 +94,11 @@ const handleDeposit = async () => {
 </script>
 
 <template>
-    <div class="container mx-auto px-4 py-8">
+    <div class="container mx-auto px-4 py-4">
         <!-- Header Section -->
         <div class="flex justify-between items-center mb-8">
             <div>
-                <h1 class="text-2xl font-bold text-gray-800">Wallet</h1>
+                <h1 class="text-2xl font-bold text-gray-800">My Wallet</h1>
                 <p class="text-gray-600">Manage your wallet and transactions</p>
             </div>
             <div>

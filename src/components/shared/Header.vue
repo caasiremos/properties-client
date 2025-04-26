@@ -54,7 +54,7 @@ const handleLogout = async () => {
             >
               <div class="py-1">
                 <router-link
-                  to="/dashboard/profile"
+                  to="/agent/profile"
                   class="block px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-50"
                 >
                   Your Profile

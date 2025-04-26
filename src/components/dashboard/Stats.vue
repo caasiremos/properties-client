@@ -1,6 +1,6 @@
 <script setup>
 import {
-  ChartBarIcon,
+  HomeIcon,
   EyeIcon,
   HeartIcon,
   UserGroupIcon
@@ -10,62 +10,66 @@ const stats = [
   {
     name: 'Total Properties',
     value: '12',
-    change: '+2.5%',
-    changeType: 'increase',
-    icon: ChartBarIcon
+    description: 'Active listings',
+    icon: HomeIcon,
+    color: 'primary'
   },
   {
     name: 'Property Views',
     value: '2.4k',
-    change: '+10.1%',
-    changeType: 'increase',
-    icon: EyeIcon
+    description: 'Total views',
+    icon: EyeIcon,
+    color: 'indigo'
   },
   {
-    name: 'Saved by Users',
+    name: 'Saved Properties',
     value: '145',
-    change: '+3.2%',
-    changeType: 'increase',
-    icon: HeartIcon
+    description: 'By potential buyers',
+    icon: HeartIcon,
+    color: 'rose'
   },
   {
-    name: 'Active Inquiries',
+    name: 'Featured Properties',
     value: '23',
-    change: '+5.4%',
-    changeType: 'increase',
-    icon: UserGroupIcon
+    description: 'Featured properties',
+    icon: HeartIcon,
+    color: 'amber'
   }
 ];
 </script>
 
 <template>
-  <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
     <div
       v-for="stat in stats"
       :key="stat.name"
-      class="bg-white px-6 py-5 rounded-lg shadow-xs"
+      class="bg-white rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow duration-200"
     >
-      <div class="flex items-center">
-        <div class="shrink-0">
+      <div class="flex items-start space-x-4">
+        <div 
+          class="flex-shrink-0 mt-1 p-2 rounded-lg"
+          :class="{
+            'bg-primary-50': stat.color === 'primary',
+            'bg-indigo-50': stat.color === 'indigo',
+            'bg-rose-50': stat.color === 'rose',
+            'bg-amber-50': stat.color === 'amber'
+          }"
+        >
           <component
             :is="stat.icon"
-            class="h-6 w-6 text-primary-600"
-            aria-hidden="true"
+            class="w-5 h-5"
+            :class="{
+              'text-primary-600': stat.color === 'primary',
+              'text-indigo-600': stat.color === 'indigo',
+              'text-rose-600': stat.color === 'rose',
+              'text-amber-600': stat.color === 'amber'
+            }"
           />
         </div>
-        <div class="ml-4">
-          <p class="text-sm font-medium text-gray-500">{{ stat.name }}</p>
-          <div class="flex items-baseline">
-            <p class="text-2xl font-semibold text-gray-900">{{ stat.value }}</p>
-            <p
-              :class="[
-                stat.changeType === 'increase' ? 'text-green-600' : 'text-red-600',
-                'ml-2 flex items-baseline text-sm font-semibold'
-              ]"
-            >
-              {{ stat.change }}
-            </p>
-          </div>
+        <div class="min-w-0 flex-1">
+          <p class="text-sm font-medium text-gray-600 truncate">{{ stat.name }}</p>
+          <p class="mt-2 text-2xl font-semibold text-gray-900">{{ stat.value }}</p>
+          <p class="mt-1 text-sm text-gray-500">{{ stat.description }}</p>
         </div>
       </div>
     </div>

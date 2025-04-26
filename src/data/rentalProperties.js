@@ -9,7 +9,8 @@ export const rentalProperties = [
     area: 1200,
     image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267',
     type: 'Apartment',
-    amenities: ['Gym', 'Security', 'Parking']
+    amenities: ['Gym', 'Security', 'Parking'],
+    status: 'Featured'
   },
   {
     id: 2,
@@ -21,7 +22,8 @@ export const rentalProperties = [
     area: 600,
     image: 'https://images.unsplash.com/photo-1536376072261-38c75010e6c9',
     type: 'Studio',
-    amenities: ['Security', 'Parking', 'Internet']
+    amenities: ['Security', 'Parking', 'Internet'],
+    status: 'Featured'
   },
   {
     id: 3,
@@ -33,7 +35,8 @@ export const rentalProperties = [
     area: 2800,
     image: 'https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6',
     type: 'House',
-    amenities: ['Garden', 'Security', 'Parking']
+    amenities: ['Garden', 'Security', 'Parking'],
+    status: 'Featured'
   },
   {
     id: 4,
@@ -45,7 +48,8 @@ export const rentalProperties = [
     area: 1500,
     image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688',
     type: 'Apartment',
-    amenities: ['Swimming Pool', 'Gym', 'Security']
+    amenities: ['Swimming Pool', 'Gym', 'Security'],
+    status: 'Featured'
   },
   {
     id: 7,
@@ -57,7 +61,8 @@ export const rentalProperties = [
     area: 1800,
     image: 'https://images.unsplash.com/photo-1497366216548-37526070297c',
     type: 'Commercial',
-    amenities: ['Security', 'Parking', 'Internet']
+    amenities: ['Security', 'Parking', 'Internet'],
+    status: 'Featured'
   },
   {
     id: 8,
@@ -69,7 +74,8 @@ export const rentalProperties = [
     area: 400,
     image: 'https://images.unsplash.com/photo-1497366412874-3415097a27e7',
     type: 'Commercial',
-    amenities: ['Internet', 'Security']
+    amenities: ['Internet', 'Security'],
+    status: 'Featured'
   },
   {
     id: 9,
@@ -81,7 +87,8 @@ export const rentalProperties = [
     area: 2000,
     image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
     type: 'House',
-    amenities: ['Garden', 'Security', 'Parking']
+    amenities: ['Garden', 'Security', 'Parking'],
+    status: 'Featured'
   },
   {
     id: 11,
@@ -93,7 +100,8 @@ export const rentalProperties = [
     area: 1100,
     image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688',
     type: 'Apartment',
-    amenities: ['Housekeeping', 'Security', 'Internet']
+    amenities: ['Housekeeping', 'Security', 'Internet'],
+    status: 'Featured'
   },
   {
     id: 12,
@@ -105,7 +113,8 @@ export const rentalProperties = [
     area: 3500,
     image: 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde',
     type: 'Villa',
-    amenities: ['Swimming Pool', 'Garden', 'Security', 'Parking']
+    amenities: ['Swimming Pool', 'Garden', 'Security', 'Parking'],
+    status: 'Featured'
   },
   {
     id: 13,
@@ -117,7 +126,8 @@ export const rentalProperties = [
     area: 900,
     image: 'https://images.unsplash.com/photo-1536376072261-38c75010e6c9',
     type: 'Apartment',
-    amenities: ['Security', 'Parking']
+    amenities: ['Security', 'Parking'],
+    status: 'Featured'
   },
   {
     id: 14,
@@ -129,7 +139,8 @@ export const rentalProperties = [
     area: 1200,
     image: 'https://images.unsplash.com/photo-1497366216548-37526070297c',
     type: 'Commercial',
-    amenities: ['Security', 'Parking']
+    amenities: ['Security', 'Parking'],
+    status: 'Featured'
   },
   {
     id: 15,
@@ -141,7 +152,8 @@ export const rentalProperties = [
     area: 1800,
     image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
     type: 'House',
-    amenities: ['Furnished', 'Security', 'Parking']
+    amenities: ['Furnished', 'Security', 'Parking'],
+    status: 'Featured'
   },
   {
     id: 17,
@@ -153,7 +165,8 @@ export const rentalProperties = [
     area: 2000,
     image: 'https://images.unsplash.com/photo-1497366412874-3415097a27e7',
     type: 'Commercial',
-    amenities: ['Security', 'Parking', 'Internet']
+    amenities: ['Security', 'Parking', 'Internet'],
+    status: 'Featured'
   },
   {
     id: 18,
@@ -165,7 +178,8 @@ export const rentalProperties = [
     area: 1400,
     image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688',
     type: 'Apartment',
-    amenities: ['Security', 'Parking']
+    amenities: ['Security', 'Parking'],
+    status: 'Featured'
   },
   {
     id: 20,
@@ -177,6 +191,7 @@ export const rentalProperties = [
     area: 2800,
     image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
     type: 'House',
-    amenities: ['Swimming Pool', 'Garden', 'Security', 'Parking']
+    amenities: ['Swimming Pool', 'Garden', 'Security', 'Parking'],
+    status: 'Featured'
   }
 ];

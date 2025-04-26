@@ -73,13 +73,13 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="container mx-auto px-4 py-8">
+    <div class="container mx-auto px-4 py-4">
         <!-- Header Section with Gradient Background -->
         <div class="bg-gradient-to-r from-primary-600 to-primary-700 rounded-xl shadow-lg mb-8">
             <div class="max-w-7xl mx-auto px-6 py-8">
                 <div class="flex flex-col md:flex-row justify-between items-center">
                     <div>
-                        <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">Properties</h1>
+                        <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">My Properties</h1>
                         <p class="text-primary-100">Manage your property listings</p>
                     </div>
                     <router-link 
