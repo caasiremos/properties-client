@@ -1,6 +1,6 @@
 <script setup>
-import { ref } from 'vue';
-import { UserCircleIcon } from '@heroicons/vue/24/outline';
+import { ref, defineEmits } from 'vue';
+import { UserCircleIcon, Bars3Icon } from '@heroicons/vue/24/outline';
 import { useStorage } from '@vueuse/core';
 import axios from '@/libs/axios';
 import { useRouter } from 'vue-router';
@@ -11,6 +11,11 @@ const router = useRouter();
 const user = JSON.parse(userData.value);
 const showNotifications = ref(false);
 const showUserMenu = ref(false);
+const emit = defineEmits(['sidebar-toggle']);
+
+const toggleSidebar = () => {
+  emit('sidebar-toggle');
+};
 
 const toggleUserMenu = () => {
   showUserMenu.value = !showUserMenu.value;
@@ -34,7 +39,15 @@ const handleLogout = async () => {
   <header class="bg-white border-b border-gray-200">
     <div class="px-6 py-4">
       <div class="flex items-center justify-between">
-        <div class="flex items-center space-x-3"></div>
+        <div class="flex items-center space-x-3">
+          <!-- Hamburger Menu Button -->
+          <button
+            @click="toggleSidebar"
+            class="p-2 rounded-md cursor-pointer text-gray-500 hover:text-gray-700 hover:bg-gray-100 focus:outline-hidden transition-colors duration-200"
+          >
+            <Bars3Icon class="w-6 h-6" />
+          </button>
+        </div>
 
         <div class="flex items-center space-x-4">
           <!-- User Menu -->
