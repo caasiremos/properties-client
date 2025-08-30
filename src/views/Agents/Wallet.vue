@@ -103,7 +103,7 @@ const handleDeposit = async () => {
             </div>
             <div>
                 <button @click="showDepositModal = true"
-                    class="flex items-center bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition">
+                    class="flex items-center cursor-pointer bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition">
                     <WalletIcon class="h-5 w-5 mr-2" /> <span class="font-semibold">Deposit Money</span>
                 </button>
             </div>
