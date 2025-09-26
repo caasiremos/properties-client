@@ -1,5 +1,5 @@
 <script setup>
-import { ref, defineEmits } from 'vue';
+import { ref } from 'vue';
 import { UserCircleIcon, Bars3Icon } from '@heroicons/vue/24/outline';
 import { useStorage } from '@vueuse/core';
 import axios from '@/libs/axios';
@@ -24,7 +24,7 @@ const toggleUserMenu = () => {
 
 const handleLogout = async () => {
   try {
-    await axios.post('/api/agent/logout');
+    await axios.post('/api/agents/logout');
     localStorage.removeItem('ACCESS_TOKEN');
     localStorage.removeItem('USERDATA');
 
@@ -77,7 +77,7 @@ const handleLogout = async () => {
                 <button
                   type="button"
                   @click="handleLogout"
-                  class="block w-full text-left px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-50"
+                  class="block cursor-pointer w-full text-left px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-50"
                 >
                   Sign out
                 </button>

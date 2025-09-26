@@ -1,5 +1,5 @@
 <script setup>
-import { ref, defineEmits, defineProps, watch } from 'vue';
+import { ref, watch } from 'vue';
 import {
   HomeIcon,
   BuildingOfficeIcon,
@@ -11,15 +11,20 @@ import {
   WalletIcon,
   UserCircleIcon,
   ChevronLeftIcon,
-  ChevronRightIcon
+  ChevronRightIcon,
+  XMarkIcon
 } from '@heroicons/vue/24/outline';
 import { useRouter } from 'vue-router';
 import axios from '@/libs/axios';
 
 const router = useRouter();
-const emit = defineEmits(['sidebar-collapse']);
+const emit = defineEmits(['sidebar-collapse', 'close-mobile']);
 const props = defineProps({
   collapsed: {
+    type: Boolean,
+    default: false
+  },
+  isMobile: {
     type: Boolean,
     default: false
   }
@@ -34,6 +39,10 @@ watch(() => props.collapsed, (newVal) => {
 const toggleCollapse = () => {
   isCollapsed.value = !isCollapsed.value;
   emit('sidebar-collapse', isCollapsed.value);
+};
+
+const closeMobile = () => {
+  emit('close-mobile');
 };
 
 const navigation = [
@@ -57,20 +66,27 @@ const handleLogout = async () => {
     console.error('Logout failed:', error);
   }
 };
+
+const handleNavClick = () => {
+  if (props.isMobile) {
+    closeMobile();
+  }
+};
 </script>
 
 <template>
   <div 
     class="flex flex-col h-full bg-white border-r border-gray-200 transition-all duration-300 ease-in-out"
-    :class="isCollapsed ? 'w-16' : 'w-64'"
+    :class="isCollapsed && !isMobile ? 'w-16' : 'w-64'"
   >
-    <!-- Header with Logo and Toggle -->
+    <!-- Header with Logo and Close/Toggle -->
     <div class="p-4 border-b border-gray-100">
       <div class="flex items-center justify-between">
         <router-link 
           to="/" 
           class="flex items-center group overflow-hidden"
-          :class="isCollapsed ? 'justify-center' : ''"
+          :class="(isCollapsed && !isMobile) ? 'justify-center' : ''"
+          @click="handleNavClick"
         >
           <div class="flex-shrink-0">
             <div class="w-8 h-8 bg-gradient-to-br from-primary-600 to-primary-700 rounded-lg flex items-center justify-center">
@@ -78,9 +94,9 @@ const handleLogout = async () => {
             </div>
           </div>
           <div 
-            v-show="!isCollapsed" 
+            v-show="!(isCollapsed && !isMobile)" 
             class="ml-3 transition-opacity duration-200"
-            :class="isCollapsed ? 'opacity-0' : 'opacity-100'"
+            :class="(isCollapsed && !isMobile) ? 'opacity-0' : 'opacity-100'"
           >
             <div class="text-lg font-bold bg-gradient-to-r from-primary-600 via-primary-500 to-primary-700 bg-clip-text text-transparent">
               FindProperty24
@@ -88,6 +104,15 @@ const handleLogout = async () => {
             <div class="text-xs text-primary-600/70 font-medium">Real Estate</div>
           </div>
         </router-link>
+        
+        <!-- Mobile Close Button -->
+        <button
+          v-if="isMobile"
+          @click="closeMobile"
+          class="p-2 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition-colors duration-200"
+        >
+          <XMarkIcon class="w-5 h-5" />
+        </button>
       </div>
     </div>
 
@@ -102,18 +127,19 @@ const handleLogout = async () => {
           :to="item.href"
           class="group flex items-center text-gray-600 rounded-lg transition-all duration-200 hover:bg-primary-50/70 hover:text-primary-700 relative overflow-hidden"
           :class="[
-            isCollapsed ? 'px-3 py-3 justify-center' : 'px-4 py-3',
+            (isCollapsed && !isMobile) ? 'px-3 py-3 justify-center' : 'px-4 py-3',
             {
               'bg-primary-50 text-primary-700 font-medium shadow-sm ring-1 ring-primary-100 before:absolute before:left-0 before:top-0 before:h-full before:w-1 before:bg-primary-600': $route.path === item.href,
               'bg-primary-50/60 text-primary-600 ring-1 ring-primary-100/50': $route.path.startsWith(item.href) && item.href !== '/agent'
             }
           ]"
+          @click="handleNavClick"
         >
           <component 
             :is="item.icon" 
             class="w-5 h-5 transition-transform duration-200 group-hover:scale-110 flex-shrink-0" 
             :class="[
-              isCollapsed ? '' : 'mr-3',
+              (isCollapsed && !isMobile) ? '' : 'mr-3',
               {
                 'text-primary-600': $route.path === item.href || ($route.path.startsWith(item.href) && item.href !== '/agent'),
                 'text-gray-400 group-hover:text-primary-500': !$route.path.startsWith(item.href)
@@ -121,17 +147,17 @@ const handleLogout = async () => {
             ]"
           />
           <span 
-            v-show="!isCollapsed" 
+            v-show="!(isCollapsed && !isMobile)" 
             class="font-medium transition-opacity duration-200"
-            :class="isCollapsed ? 'opacity-0' : 'opacity-100'"
+            :class="(isCollapsed && !isMobile) ? 'opacity-0' : 'opacity-100'"
           >
             {{ item.name }}
           </span>
         </router-link>
         
-        <!-- Tooltip for collapsed state -->
+        <!-- Tooltip for collapsed state (desktop only) -->
         <div
-          v-if="isCollapsed"
+          v-if="isCollapsed && !isMobile"
           class="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 px-2 py-1 bg-gray-900 text-white text-sm rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50"
         >
           {{ item.name }}
@@ -146,24 +172,24 @@ const handleLogout = async () => {
         <button
           @click="handleLogout"
           class="flex items-center w-full text-gray-700 rounded-lg hover:bg-gray-50 hover:text-primary-600 transition-all duration-200"
-          :class="isCollapsed ? 'px-3 py-3 justify-center' : 'px-4 py-3'"
+          :class="(isCollapsed && !isMobile) ? 'px-3 py-3 justify-center' : 'px-4 py-3'"
         >
           <ArrowLeftOnRectangleIcon 
             class="w-5 h-5 flex-shrink-0 transition-transform duration-200 group-hover:scale-110" 
-            :class="isCollapsed ? '' : 'mr-3'"
+            :class="(isCollapsed && !isMobile) ? '' : 'mr-3'"
           />
           <span 
-            v-show="!isCollapsed" 
+            v-show="!(isCollapsed && !isMobile)" 
             class="font-medium transition-opacity duration-200"
-            :class="isCollapsed ? 'opacity-0' : 'opacity-100'"
+            :class="(isCollapsed && !isMobile) ? 'opacity-0' : 'opacity-100'"
           >
             Logout
           </span>
         </button>
         
-        <!-- Tooltip for collapsed logout button -->
+        <!-- Tooltip for collapsed logout button (desktop only) -->
         <div
-          v-if="isCollapsed"
+          v-if="isCollapsed && !isMobile"
           class="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 px-2 py-1 bg-gray-900 text-white text-sm rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50"
         >
           Logout
