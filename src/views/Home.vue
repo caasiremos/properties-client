@@ -9,7 +9,7 @@ import TestimonialsSection from '../components/home/TestimonialsSection.vue';
 <template>
   <main>
     <HeroSection />
-    <ValueProposition />
+<!--    <ValueProposition />-->
     <FeaturedProperties />
     <PopularAreas />
     <TestimonialsSection />
