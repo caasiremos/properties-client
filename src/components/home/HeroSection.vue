@@ -30,7 +30,7 @@ const handleSearch = () => {
         class="w-full h-full object-cover"
         alt="Property Hero"
       />
-      <div class="absolute inset-0 bg-gray-900/80"></div>
+      <div class="absolute inset-0 bg-gray-900/50"></div>
     </div>
 
     <!-- Content Container with proper z-index -->
