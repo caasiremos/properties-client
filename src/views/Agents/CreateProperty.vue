@@ -110,7 +110,7 @@
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Bedrooms</label>
             <input
-              v-model="property.bedrooms"
+              v-model.number="property.amenities.bedroom"
               type="number"
               required
               min="0"
@@ -121,7 +121,7 @@
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Bathrooms</label>
             <input
-              v-model="property.bathrooms"
+              v-model.number="property.amenities.bathroom"
               type="number"
               required
               min="0"
@@ -132,7 +132,7 @@
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Area (sqft)</label>
             <input
-              v-model="property.area"
+              v-model.number="property.amenities.area"
               type="number"
               required
               min="0"
@@ -144,15 +144,14 @@
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-3">Amenities</label>
           <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div v-for="amenity in amenitiesList" :key="amenity" class="flex items-center">
+            <div v-for="amenity in amenitiesList" :key="amenity.key" class="flex items-center">
               <input
-                :id="amenity"
+                :id="amenity.key"
                 type="checkbox"
-                v-model="property.amenities"
-                :value="amenity"
+                v-model="property.amenities[amenity.key]"
                 class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
               >
-              <label :for="amenity" class="ml-2 text-sm text-gray-700">{{ amenity }}</label>
+              <label :for="amenity.key" class="ml-2 text-sm text-gray-700">{{ amenity.label }}</label>
             </div>
           </div>
         </div>
@@ -185,9 +184,14 @@
         </button>
         <button
           type="submit"
-          class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+          :disabled="loading"
+          class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
         >
-          Create Property
+          <svg v-if="loading" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          {{ loading ? 'Creating...' : 'Create Property' }}
         </button>
       </div>
     </form>
@@ -199,9 +203,12 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useToast } from 'vue-toastification';
 import ImageUpload from '@/components/ui/ImageUpload.vue';
+import axios from '@/libs/axios';
 
 const router = useRouter();
 const toast = useToast();
+
+const loading = ref(false);
 
 const property = ref({
   title: '',
@@ -210,10 +217,21 @@ const property = ref({
   location: '',
   type: 'Apartment',
   status: 'Available',
-  bedrooms: '',
-  bathrooms: '',
-  area: '',
-  amenities: [],
+  amenities: {
+    bedroom: 0,
+    bathroom: 0,
+    area: 0,
+    swimming_pool: false,
+    gym: false,
+    security: false,
+    parking: false,
+    internet: false,
+    air_conditioning: false,
+    furnished: false,
+    garden: false,
+    balcony: false,
+    elevator: false
+  },
   images: []
 });
 
@@ -234,26 +252,64 @@ const propertyStatus = [
 ];
 
 const amenitiesList = [
-  'Swimming Pool',
-  'Gym',
-  'Security',
-  'Parking',
-  'Internet',
-  'Air Conditioning',
-  'Furnished',
-  'Garden',
-  'Balcony',
-  'Elevator'
+  { key: 'swimming_pool', label: 'Swimming Pool' },
+  { key: 'gym', label: 'Gym' },
+  { key: 'security', label: 'Security' },
+  { key: 'parking', label: 'Parking' },
+  { key: 'internet', label: 'Internet' },
+  { key: 'air_conditioning', label: 'Air Conditioning' },
+  { key: 'furnished', label: 'Furnished' },
+  { key: 'garden', label: 'Garden' },
+  { key: 'balcony', label: 'Balcony' },
+  { key: 'elevator', label: 'Elevator' }
 ];
 
 
 const handleSubmit = async () => {
+  loading.value = true;
+
   try {
-    // TODO: Implement API call
+    const formData = new FormData();
+
+    // Add basic property data
+    formData.append('title', property.value.title);
+    formData.append('description', property.value.description);
+    formData.append('price', property.value.price);
+    formData.append('location', property.value.location);
+    formData.append('type', property.value.type);
+    formData.append('status', property.value.status);
+
+    // Add amenities as JSON string
+    formData.append('amenities', JSON.stringify(property.value.amenities));
+
+    // Add images
+    property.value.images.forEach((image, index) => {
+      if (image instanceof File) {
+        formData.append(`images[${index}]`, image);
+      }
+    });
+
+    // Make API call
+    await axios.post('/api/agents/properties', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
     toast.success('Property created successfully!');
     router.push('/agent/properties');
+
   } catch (error) {
-    toast.error('Failed to create property');
+    console.error('Error creating property:', error);
+
+    // Handle specific error messages
+    const errorMessage = error.response?.data?.message ||
+                       error.response?.data?.error ||
+                       'Failed to create property. Please try again.';
+
+    toast.error(errorMessage);
+  } finally {
+    loading.value = false;
   }
 };
 </script>
