@@ -297,7 +297,7 @@ const handleSubmit = async () => {
     });
 
     toast.success('Property created successfully!');
-    router.push('/agent/properties');
+    await router.push('/agent/properties');
 
   } catch (error) {
     console.error('Error creating property:', error);
