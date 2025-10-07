@@ -57,7 +57,7 @@ const navigation = [
 
 const handleLogout = async () => {
   try {
-    await axios.post('/api/agent/logout');
+    await axios.post('/api/agents/logout');
     localStorage.removeItem('ACCESS_TOKEN');
     localStorage.removeItem('USERDATA');
 

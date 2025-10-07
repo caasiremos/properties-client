@@ -2,11 +2,12 @@
 import { ref, onMounted, watch } from 'vue';
 import PhoneNumber from '../../components/PhoneNumber.vue';
 import { WalletIcon, ChartBarIcon, XMarkIcon, InformationCircleIcon } from '@heroicons/vue/24/outline';
+import { ChevronDownIcon } from '@heroicons/vue/24/solid';
 import axios from '../../libs/axios';
 import Swal from 'sweetalert2';
 
-const walletNumber = ref('PR-00001');
-const balance = ref(50000.00);
+const walletNumber = ref(null);
+const balance = ref(null);
 const timeFilter = ref('7');
 const showDepositModal = ref(false);
 const depositForm = ref({
@@ -18,10 +19,21 @@ const isLoading = ref(false);
 const transactions = ref([]);
 
 const formatAmount = (amount) => {
-    return amount.toLocaleString('en-US', {
-        style: 'currency',
-        currency: 'UGX'
-    });
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'UGX'
+  }).format(amount);
+};
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  }).format(date);
 };
 
 const preventExponentialNotation = (e) => {
@@ -37,10 +49,11 @@ const getWalletData = async () => {
             params: { days: timeFilter.value }
         });
 
+      console.log('wallet_identifier', response.data.data);
         if (response.data) {
-            walletNumber.value = response.data.wallet_number || 'WAL-XXXX';
-            balance.value = response.data.balance || 0;
-            transactions.value = response.data.transactions || [];
+          walletNumber.value = response?.data?.data?.wallet_identifier || 'WAL-XXXX';
+          balance.value = response?.data?.data?.balance || 0;
+          transactions.value = response?.data?.data?.transactions || [];
         }
     } catch (error) {
         console.error('Error fetching wallet data:', error);
@@ -66,8 +79,16 @@ const handleDeposit = async () => {
                 icon: 'success',
                 title: 'Payment request in progress!',
                 text: 'Please enter your PIN to complete the transaction.',
-                timer: 3000,
-                showConfirmButton: false
+                showConfirmButton: false,
+                showCancelButton: true,
+                cancelButtonText: 'Cancel',
+                cancelButtonColor: '#0D9488',
+                allowOutsideClick: false,
+                allowEscapeKey: false
+            }).then((result) => {
+                if (result.isDismissed && result.dismiss === Swal.DismissReason.cancel) {
+                    window.location.reload();
+                }
             });
 
             // Refresh wallet data
@@ -173,25 +194,60 @@ onMounted(() => {
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
-                        <template v-if="transactions.length > 0">
-                            <tr v-for="transaction in transactions" :key="transaction.id">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ transaction.date }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ transaction.id }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ transaction.phoneNumber }}
+                        <!-- Loading State -->
+                        <template v-if="isLoading">
+                            <tr v-for="i in 5" :key="`loading-${i}`">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="animate-pulse">
+                                        <div class="h-4 bg-gray-200 rounded w-24"></div>
+                                    </div>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-green-600">
-                                    +{{ formatAmount(transaction.amount) }}
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="animate-pulse">
+                                        <div class="h-4 bg-gray-200 rounded w-32"></div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="animate-pulse">
+                                        <div class="h-4 bg-gray-200 rounded w-28"></div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="animate-pulse">
+                                        <div class="h-4 bg-gray-200 rounded w-20"></div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="animate-pulse">
+                                        <div class="h-6 bg-gray-200 rounded-full w-16"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </template>
+
+                        <!-- Data State -->
+                        <template v-else-if="transactions.length > 0">
+                            <tr v-for="transaction in transactions" :key="transaction.id">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ formatDate(transaction.created_at) }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ transaction.transaction_reference }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ transaction.transaction_phone_number }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium"
+                                    :class="transaction.type === 'debit' || transaction.amount < 0 ? 'text-red-600' : 'text-green-600'">
+                                    {{ transaction.type === 'debit' || transaction.amount < 0 ? '-' : '+' }}{{ formatAmount(Math.abs(transaction.amount)) }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <span :class="[
                                         'px-2 py-1 text-xs rounded-full',
                                         transaction.status === 'completed' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
                                     ]">
-                                        {{ transaction.status }}
+                                        {{ transaction.transaction_status }}
                                     </span>
                                 </td>
                             </tr>
                         </template>
+
+                        <!-- Empty State -->
                         <template v-else>
                             <tr>
                                 <td colspan="5" class="px-6 py-12">
