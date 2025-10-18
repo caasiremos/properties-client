@@ -239,7 +239,9 @@ onMounted(() => {
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <span :class="[
                                         'px-2 py-1 text-xs rounded-full',
-                                        transaction.status === 'completed' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                                        transaction.transaction_status === 'success' ? 'bg-green-100 text-green-800' :
+                                        transaction.transaction_status === 'failed' ? 'bg-red-100 text-red-800' :
+                                        'bg-yellow-100 text-yellow-800'
                                     ]">
                                         {{ transaction.transaction_status }}
                                     </span>

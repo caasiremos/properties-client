@@ -2,13 +2,47 @@ import axios from '@/libs/axios';
 
 export const propertyService = {
   /**
+   * Transform property data from new API structure to match existing UI expectations
+   * @param {Object} property - Property object from new API
+   * @returns {Object} Transformed property object
+   */
+  transformPropertyData(property) {
+    return {
+      ...property,
+      // Transform nested amenities to flat properties for backward compatibility
+      bedrooms: property.amenities?.bedroom || 0,
+      bathrooms: property.amenities?.bathroom || 0,
+      area: property.amenities?.area || 0,
+      // Use first image as main image for backward compatibility
+      image: property.images?.[0] || null,
+      // Keep original amenities object for new features
+      amenities: property.amenities || {},
+      images: property.images || []
+    };
+  },
+
+  /**
+   * Transform array of properties from new API structure
+   * @param {Array} properties - Array of property objects from new API
+   * @returns {Array} Array of transformed property objects
+   */
+  transformPropertiesData(properties) {
+    return properties.map(property => this.transformPropertyData(property));
+  },
+
+  /**
    * Fetch all properties for the logged-in agent
    * @returns {Promise} Promise object containing the properties data
    */
   async fetchAgentProperties() {
     try {
       const response = await axios.get('/api/agents/properties');
-      return response.data;
+      // Handle new response structure with data wrapper
+      const properties = response.data.data || response.data;
+      return {
+        ...response.data,
+        data: this.transformPropertiesData(properties)
+      };
     } catch (error) {
       console.error('Error fetching agent properties:', error);
       throw error;
@@ -16,66 +50,19 @@ export const propertyService = {
   },
 
   /**
-   * Transform API response data to match component expected format
-   * @param {Array} apiProperties - Properties from API response
-   * @returns {Array} Transformed properties data
+   * Fetch a single property by ID
+   * @param {number} propertyId - The ID of the property to fetch
+   * @returns {Promise} Promise object containing the property data
    */
-  transformPropertiesData(apiProperties) {
-    return apiProperties.map(property => {
-      // Parse amenities JSON string
-      let amenities = [];
-      try {
-        const parsedAmenities = typeof property.amenities === 'string'
-          ? JSON.parse(property.amenities)
-          : property.amenities;
-
-        // Convert amenities object to array of amenity names
-        amenities = Object.entries(parsedAmenities)
-          .filter(([key, value]) => value === true || typeof value === 'number')
-          .map(([key]) => {
-            // Convert snake_case to Title Case
-            return key.split('_').map(word =>
-              word.charAt(0).toUpperCase() + word.slice(1)
-            ).join(' ');
-          });
-      } catch (error) {
-        console.warn('Error parsing amenities:', error);
-      }
-
-      // Extract bedroom and bathroom counts from amenities
-      let bedrooms = 0;
-      let bathrooms = 0;
-      let area = 0;
-
-      try {
-        const parsedAmenities = typeof property.amenities === 'string'
-          ? JSON.parse(property.amenities)
-          : property.amenities;
-
-        bedrooms = parsedAmenities.bedroom || 0;
-        bathrooms = parsedAmenities.bathroom || 0;
-        area = parsedAmenities.area || 0;
-      } catch (error) {
-        console.warn('Error parsing room counts:', error);
-      }
-
-      return {
-        id: property.id,
-        title: property.title,
-        price: parseFloat(property.price) || 0,
-        type: property.type,
-        status: property.status?.toLowerCase() || 'available',
-        location: property.location,
-        description: property.description,
-        image: property.images && property.images.length > 0 ? property.images[0] : '/placeholder-property.jpg',
-        images: property.images || [],
-        bedrooms: bedrooms,
-        bathrooms: bathrooms,
-        area: area,
-        amenities: amenities,
-        created_at: property.created_at,
-        updated_at: property.updated_at
-      };
-    });
-  }
+  async fetchPropertyById(propertyId) {
+    try {
+      const response = await axios.get(`/api/agents/properties/${propertyId}`);
+      // Transform single property data
+      const transformedProperty = this.transformPropertyData(response.data);
+      return transformedProperty;
+    } catch (error) {
+      console.error('Error fetching property:', error);
+      throw error;
+    }
+  },
 };

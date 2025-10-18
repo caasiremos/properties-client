@@ -34,6 +34,15 @@ const filteredProperties = computed(() => {
     return result;
 });
 
+// Helper function to get true amenities for a property
+const getTrueAmenities = (amenities) => {
+    if (!amenities || typeof amenities !== 'object') return [];
+
+    return Object.entries(amenities)
+        .filter(([key, value]) => value === true && !['bedroom', 'bathroom', 'area'].includes(key))
+        .map(([key]) => key.replace(/_/g, ' '));
+};
+
 const handleSearch = () => {
     // No need to fetch, computed property will handle filtering
 };
@@ -83,10 +92,6 @@ const deleteProperty = async (propertyId) => {
     }
 };
 
-const formatPrice = (price) => {
-    return new Intl.NumberFormat('en-US').format(price);
-};
-
 const getStatusClass = (status) => {
     const classes = {
         available: 'bg-green-100 text-green-800',
@@ -100,8 +105,7 @@ const fetchProperties = async () => {
     loading.value = true;
     try {
         const response = await propertyService.fetchAgentProperties();
-        const transformedProperties = propertyService.transformPropertiesData(response.data);
-        properties.value = transformedProperties;
+        properties.value = response.data;
     } catch (error) {
         console.error('Error fetching properties:', error);
         toast.error('Failed to load properties. Please try again.');
@@ -195,7 +199,7 @@ onMounted(() => {
                     <!-- Property Image -->
                     <div class="md:w-80 relative shrink-0">
                         <img 
-                            :src="property.image || '/placeholder-property.jpg'" 
+                            :src="property.image"
                             class="w-full h-full object-cover min-h-[200px]"
                             alt="Property"
                         >
@@ -224,7 +228,7 @@ onMounted(() => {
                                         <span class="truncate">{{ property.location }}</span>
                                     </div>
                                 </div>
-                                <div class="text-xl font-bold text-primary-600 ml-4 shrink-0">{{ formatPrice(property.price) }}</div>
+                                <div class="text-xl font-bold text-primary-600 ml-4 shrink-0">{{ property.price }}</div>
                             </div>
 
                             <!-- Property Features -->
@@ -233,37 +237,45 @@ onMounted(() => {
                                     <svg class="w-4 h-4 mr-1 shrink-0 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                                     </svg>
-                                    <span class="truncate">{{ property.type }}</span>
+                                    <span class="truncate">{{ property.type ?? 'Apartment' }}</span>
                                 </div>
                                 <div class="flex items-center text-gray-600">
                                     <svg class="w-4 h-4 mr-1 shrink-0 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                                     </svg>
-                                    <span>{{ property.bedrooms }} beds</span>
+                                    <span>{{ property.bedrooms || property.amenities?.bedroom || 0 }} beds</span>
                                 </div>
                                 <div class="flex items-center text-gray-600">
                                     <svg class="w-4 h-4 mr-1 shrink-0 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
                                     </svg>
-                                    <span>{{ property.bathrooms }} baths</span>
+                                    <span>{{ property.bathrooms || property.amenities?.bathroom || 0 }} baths</span>
                                 </div>
                                 <div class="flex items-center text-gray-600">
                                     <svg class="w-4 h-4 mr-1 shrink-0 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
                                     </svg>
-                                    <span>{{ property.area }} sqft</span>
+                                    <span>{{ property.area || property.amenities?.area || 0 }} sqft</span>
                                 </div>
                             </div>
 
                             <!-- Amenities -->
-                            <div v-if="property.amenities && property.amenities.length > 0">
+                            <div v-if="property.amenities && getTrueAmenities(property.amenities).length > 0" class="mt-4">
+                                <div class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Amenities</div>
                                 <div class="flex flex-wrap gap-2">
                                     <span
-                                        v-for="amenity in property.amenities"
+                                        v-for="amenity in getTrueAmenities(property.amenities)"
                                         :key="amenity"
-                                        v-if="!['Bedroom', 'Bathroom', 'Area'].includes(amenity)"
-                                        class="bg-primary-50 text-primary-600 px-2 py-1 rounded-md text-xs font-medium">
+                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200">
+                                        <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                        </svg>
                                         {{ amenity }}
+                                    </span>
+                                    <!-- Show if no amenities found -->
+                                    <span v-if="getTrueAmenities(property.amenities).length === 0"
+                                          class="text-gray-400 text-xs italic">
+                                        No amenities listed
                                     </span>
                                 </div>
                             </div>

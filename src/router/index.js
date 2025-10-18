@@ -19,6 +19,7 @@ import ResetPassword from '../views/ResetPassword.vue';
 import EmailVerified from '../views/EmailVerified.vue';
 import { useStorage } from '@vueuse/core';
 import Profile from '../views/Agents/Profile.vue';
+import PropertyDetail from '../views/Agents/PropertyDetail.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -88,6 +89,7 @@ const router = createRouter({
       children: [
         { path: '', component: Dashboard },
         { path: 'properties', component: Properties },
+        { path: 'properties/:id', component: PropertyDetail },
         { path: 'properties/create', component: CreateProperty },
         { path: 'wallet', component: Wallet },
         { path: 'profile', component: Profile },
