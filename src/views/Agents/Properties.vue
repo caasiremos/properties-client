@@ -1,7 +1,8 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import { useToast } from 'vue-toastification';
-import { rentalProperties } from '@/data/rentalProperties.js';
+import { propertyService } from '@/services/propertyService.js';
+import axios from '@/libs/axios';
 
 const properties = ref([]);
 const loading = ref(false);
@@ -10,25 +11,25 @@ const filterStatus = ref('');
 const toast = useToast();
 
 const filteredProperties = computed(() => {
-    let result = [...rentalProperties];
-    
+    let result = [...properties.value];
+
     // Apply search filter
     if (searchQuery.value) {
         const searchTerm = searchQuery.value.toLowerCase();
-        result = result.filter(property => 
+        result = result.filter(property =>
             property.title.toLowerCase().includes(searchTerm) ||
             property.location.toLowerCase().includes(searchTerm) ||
             property.type.toLowerCase().includes(searchTerm)
         );
     }
-    
+
     // Apply status filter
     if (filterStatus.value) {
-        result = result.filter(property => 
+        result = result.filter(property =>
             property.status?.toLowerCase() === filterStatus.value.toLowerCase()
         );
     }
-    
+
     return result;
 });
 
@@ -44,7 +45,8 @@ const deleteProperty = async (propertyId) => {
     if (!confirm('Are you sure you want to delete this property?')) return;
 
     try {
-        // Simulate deletion by filtering out the property
+        await axios.delete(`/api/agents/properties/${propertyId}`);
+        // Remove property from local state
         properties.value = properties.value.filter(p => p.id !== propertyId);
         toast.success('Property deleted successfully');
     } catch (error) {
@@ -66,9 +68,23 @@ const getStatusClass = (status) => {
     return classes[status?.toLowerCase()] || 'bg-gray-100 text-gray-800';
 };
 
+const fetchProperties = async () => {
+    loading.value = true;
+    try {
+        const response = await propertyService.fetchAgentProperties();
+        const transformedProperties = propertyService.transformPropertiesData(response.data);
+        properties.value = transformedProperties;
+    } catch (error) {
+        console.error('Error fetching properties:', error);
+        toast.error('Failed to load properties. Please try again.');
+        properties.value = [];
+    } finally {
+        loading.value = false;
+    }
+};
+
 onMounted(() => {
-    // Initialize with rental properties data
-    properties.value = rentalProperties;
+    fetchProperties();
 });
 </script>
 
@@ -180,7 +196,7 @@ onMounted(() => {
                                         <span class="truncate">{{ property.location }}</span>
                                     </div>
                                 </div>
-                                <div class="text-xl font-bold text-primary-600 ml-4 shrink-0">${{ formatPrice(property.price) }}</div>
+                                <div class="text-xl font-bold text-primary-600 ml-4 shrink-0">{{ formatPrice(property.price) }}</div>
                             </div>
 
                             <!-- Property Features -->
@@ -212,11 +228,12 @@ onMounted(() => {
                             </div>
 
                             <!-- Amenities -->
-                            <div>
+                            <div v-if="property.amenities && property.amenities.length > 0">
                                 <div class="flex flex-wrap gap-2">
-                                    <span 
-                                        v-for="amenity in property.amenities" 
+                                    <span
+                                        v-for="amenity in property.amenities"
                                         :key="amenity"
+                                        v-if="!['Bedroom', 'Bathroom', 'Area'].includes(amenity)"
                                         class="bg-primary-50 text-primary-600 px-2 py-1 rounded-md text-xs font-medium">
                                         {{ amenity }}
                                     </span>

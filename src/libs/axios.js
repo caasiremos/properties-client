@@ -3,6 +3,7 @@ import { useStorage } from '@vueuse/core';
 
 const axios = Axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
+  withCredentials: true,
   headers: {
     Accept: 'application/json',
   },
