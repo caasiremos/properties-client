@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import { useToast } from 'vue-toastification';
+import Swal from 'sweetalert2';
 import { propertyService } from '@/services/propertyService.js';
 import axios from '@/libs/axios';
 
@@ -42,14 +43,41 @@ const handleFilter = () => {
 };
 
 const deleteProperty = async (propertyId) => {
-    if (!confirm('Are you sure you want to delete this property?')) return;
+    const result = await Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc2626',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel'
+    });
+
+    if (!result.isConfirmed) return;
 
     try {
         await axios.delete(`/api/agents/properties/${propertyId}`);
         // Remove property from local state
         properties.value = properties.value.filter(p => p.id !== propertyId);
+
+        Swal.fire({
+            title: 'Deleted!',
+            text: 'Property has been deleted successfully.',
+            icon: 'success',
+            timer: 2000,
+            showConfirmButton: false
+        });
+
         toast.success('Property deleted successfully');
     } catch (error) {
+        Swal.fire({
+            title: 'Error!',
+            text: 'Failed to delete property. Please try again.',
+            icon: 'error',
+            confirmButtonColor: '#dc2626'
+        });
+
         toast.error('Failed to delete property');
         console.error('Error deleting property:', error);
     }
