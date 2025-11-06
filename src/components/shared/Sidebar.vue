@@ -88,21 +88,12 @@ const handleNavClick = () => {
           :class="(isCollapsed && !isMobile) ? 'justify-center' : ''"
           @click="handleNavClick"
         >
-          <div class="flex-shrink-0">
-            <div class="w-8 h-8 bg-gradient-to-br from-primary-600 to-primary-700 rounded-lg flex items-center justify-center">
-              <span class="text-white font-bold text-sm">FP</span>
-            </div>
-          </div>
-          <div 
-            v-show="!(isCollapsed && !isMobile)" 
-            class="ml-3 transition-opacity duration-200"
-            :class="(isCollapsed && !isMobile) ? 'opacity-0' : 'opacity-100'"
-          >
-            <div class="text-lg font-bold bg-gradient-to-r from-primary-600 via-primary-500 to-primary-700 bg-clip-text text-transparent">
-              FindProperty24
-            </div>
-            <div class="text-xs text-primary-600/70 font-medium">Real Estate</div>
-          </div>
+          <img 
+            src="/logo.svg" 
+            alt="FindProperty24" 
+            class="transition-all duration-200"
+            :class="(isCollapsed && !isMobile) ? 'h-8 w-auto' : 'h-10 w-auto'"
+          />
         </router-link>
         
         <!-- Mobile Close Button -->
@@ -125,12 +116,12 @@ const handleNavClick = () => {
       >
         <router-link
           :to="item.href"
-          class="group flex items-center text-gray-600 rounded-lg transition-all duration-200 hover:bg-primary-50/70 hover:text-primary-700 relative overflow-hidden"
+          class="group flex items-center text-gray-600 rounded-lg transition-all duration-200 hover:bg-red-50/70 hover:text-[#DC2626] relative overflow-hidden"
           :class="[
             (isCollapsed && !isMobile) ? 'px-3 py-3 justify-center' : 'px-4 py-3',
             {
-              'bg-primary-50 text-primary-700 font-medium shadow-sm ring-1 ring-primary-100 before:absolute before:left-0 before:top-0 before:h-full before:w-1 before:bg-primary-600': $route.path === item.href,
-              'bg-primary-50/60 text-primary-600 ring-1 ring-primary-100/50': $route.path.startsWith(item.href) && item.href !== '/agent'
+              'bg-red-50 text-[#DC2626] font-medium shadow-sm ring-1 ring-red-100 before:absolute before:left-0 before:top-0 before:h-full before:w-1 before:bg-[#DC2626]': $route.path === item.href,
+              'bg-red-50/60 text-red-600 ring-1 ring-red-100/50': $route.path.startsWith(item.href) && item.href !== '/agent'
             }
           ]"
           @click="handleNavClick"
@@ -141,8 +132,8 @@ const handleNavClick = () => {
             :class="[
               (isCollapsed && !isMobile) ? '' : 'mr-3',
               {
-                'text-primary-600': $route.path === item.href || ($route.path.startsWith(item.href) && item.href !== '/agent'),
-                'text-gray-400 group-hover:text-primary-500': !$route.path.startsWith(item.href)
+                'text-[#DC2626]': $route.path === item.href || ($route.path.startsWith(item.href) && item.href !== '/agent'),
+                'text-gray-400 group-hover:text-[#DC2626]': !$route.path.startsWith(item.href)
               }
             ]"
           />
@@ -171,7 +162,7 @@ const handleNavClick = () => {
       <div class="relative group">
         <button
           @click="handleLogout"
-          class="flex items-center w-full text-gray-700 rounded-lg hover:bg-gray-50 hover:text-primary-600 transition-all duration-200"
+          class="flex items-center w-full text-gray-700 rounded-lg hover:bg-gray-50 hover:text-[#DC2626] transition-all duration-200"
           :class="(isCollapsed && !isMobile) ? 'px-3 py-3 justify-center' : 'px-4 py-3'"
         >
           <ArrowLeftOnRectangleIcon 
