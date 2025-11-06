@@ -45,25 +45,24 @@ onUnmounted(() => {
     hasScrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-white shadow-sm'
   ]">
     <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Top">
-      <div class="flex h-18 items-center justify-between">
+      <div class="flex h-20 items-center justify-between">
         <!-- Logo -->
         <div class="flex items-center">
           <router-link to="/" class="flex items-center space-x-3 group">
             <div class="relative">
-              <HomeIcon class="h-9 w-9 text-primary-600 transition-all duration-200 group-hover:scale-110" />
-              <div class="absolute inset-0 bg-primary-600 rounded-full opacity-0 group-hover:opacity-10 transition-opacity duration-200"></div>
+              <img src="/logo.svg" alt="FindProperty24" class="h-14 w-auto transition-all duration-200 group-hover:scale-110" />
+              <div class="absolute inset-0 bg-primary-600 rounded-lg opacity-0 group-hover:opacity-5 transition-opacity duration-200"></div>
             </div>
-            <span class="text-2xl font-bold text-primary-600 transition-colors duration-200 group-hover:text-primary-700">findproperty24</span>
           </router-link>
         </div>
 
         <!-- Desktop Navigation -->
-        <div class="hidden md:flex items-center space-x-1">
+        <div class="hidden md:flex items-center space-x-2">
           <router-link v-for="item in navigation"
                       :key="item.name"
                       :to="item.href"
                       :class="[
-                        'relative px-4 py-2.5 text-sm font-medium transition-all duration-200 rounded-lg',
+                        'relative px-5 py-3 text-base font-medium transition-all duration-200 rounded-lg',
                         'text-gray-700 hover:text-primary-600 hover:bg-primary-50',
                         isActiveRoute(item.href) ? 'text-primary-600 bg-primary-50' : ''
                       ]">
@@ -75,13 +74,13 @@ onUnmounted(() => {
         <!-- User Actions -->
         <div class="hidden md:flex items-center space-x-3">
           <RouterLink :to="{ name: 'login' }"
-                  class="relative px-4 py-2.5 text-sm font-medium text-gray-700 hover:text-primary-600
+                  class="relative px-5 py-3 text-base font-medium text-gray-700 hover:text-primary-600
                          hover:bg-primary-50 rounded-lg transition-all duration-200 group">
             <span class="relative z-10">Login</span>
             <div class="absolute inset-0 bg-primary-600 rounded-lg opacity-0 group-hover:opacity-5 transition-opacity duration-200"></div>
           </RouterLink>
           <RouterLink :to="{ name: 'register' }"
-                  class="relative px-5 py-2.5 text-sm font-medium text-white bg-primary-600
+                  class="relative px-6 py-3 text-base font-medium text-white bg-primary-600
                          hover:bg-primary-700 rounded-lg transition-all duration-200 transform hover:scale-105
                          shadow-sm hover:shadow-md">
             <span>List Property</span>
