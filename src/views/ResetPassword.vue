@@ -113,7 +113,9 @@ const handleResetPassword = async () => {
       <div class="max-w-md w-full mx-auto">
         <!-- Logo -->
         <div class="flex justify-center mb-8">
-          <img src="/logo.svg" alt="FindProperty24" class="h-16 w-auto" />
+          <router-link to="/">
+            <img src="/logo.svg" alt="FindProperty24" class="h-16 w-auto cursor-pointer hover:opacity-80 transition-opacity duration-200" />
+          </router-link>
         </div>
         
         <div class="text-center">
