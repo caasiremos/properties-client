@@ -4,9 +4,9 @@ import TheFooter from '@/components/layout/TheFooter.vue';
 </script>
 
 <template>
-    <div class="min-h-screen bg-gray-50 flex flex-col">
+    <div class="min-h-screen bg-white flex flex-col">
         <TheHeader/>
-        <main class="flex-1 pt-18">
+        <main class="flex-1">
             <router-view></router-view>
         </main>
         <TheFooter/>

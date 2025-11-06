@@ -26,16 +26,17 @@ const setActiveTab = (tabId) => {
 
 <template>
   <!-- Hero Section -->
-  <section class="relative h-[450px] lg:h-[500px]">
-    <!-- Background Image -->
-    <img
-      src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c"
-      class="w-full h-full object-cover"
-      alt="Luxury Property Interior"
-    />
+  <section class="px-4 lg:px-16 pt-6 pb-8">
+    <div class="relative h-[550px] lg:h-[600px] rounded-2xl overflow-hidden">
+      <!-- Background Image -->
+      <img
+        src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c"
+        class="w-full h-full object-cover"
+        alt="Luxury Property Interior"
+      />
 
-    <!-- Dark Overlay -->
-    <div class="absolute inset-0 bg-black/50"></div>
+      <!-- Dark Overlay -->
+      <div class="absolute inset-0 bg-black/50"></div>
 
     <!-- Content Container -->
     <div class="absolute inset-0 flex items-center justify-center">
@@ -89,6 +90,7 @@ const setActiveTab = (tabId) => {
 
         </div>
       </div>
+    </div>
     </div>
   </section>
 </template>
