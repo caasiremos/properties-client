@@ -9,10 +9,12 @@ const isMenuOpen = ref(false);
 const hasScrolled = ref(false);
 
 const navigation = [
-  { name: 'Home', href: '/' },
   { name: 'Buy', href: '/buy' },
-  { name: 'Sell', href: '/sell' },
-  { name: 'Agent', href: '/agents' },
+  { name: 'Rent', href: '/rent' },
+  { name: 'Furnished', href: '/furnished' },
+  { name: 'Land', href: '/land' },
+  { name: 'Services', href: '/services' },
+  { name: 'Find agent', href: '/agents' },
 ];
 
 const isActiveRoute = (path) => {
@@ -48,47 +50,40 @@ onUnmounted(() => {
       <div class="flex h-20 items-center justify-between">
         <!-- Logo -->
         <div class="flex items-center">
-          <router-link to="/" class="flex items-center space-x-3 group">
-            <div class="relative">
-              <img src="/logo.svg" alt="FindProperty24" class="h-14 w-auto transition-all duration-200 group-hover:scale-110" />
-              <div class="absolute inset-0 bg-primary-600 rounded-lg opacity-0 group-hover:opacity-5 transition-opacity duration-200"></div>
-            </div>
+          <router-link to="/" class="flex items-center group">
+            <img src="/logo.svg" alt="FindProperty24" class="h-12 w-auto transition-all duration-200 group-hover:scale-105" />
           </router-link>
         </div>
 
         <!-- Desktop Navigation -->
-        <div class="hidden md:flex items-center space-x-2">
+        <div class="hidden lg:flex items-center space-x-8">
           <router-link v-for="item in navigation"
                       :key="item.name"
                       :to="item.href"
                       :class="[
-                        'relative px-5 py-3 text-base font-medium transition-all duration-200 rounded-lg',
-                        'text-gray-700 hover:text-primary-600 hover:bg-primary-50',
-                        isActiveRoute(item.href) ? 'text-primary-600 bg-primary-50' : ''
+                        'text-base font-medium transition-all duration-200 cursor-pointer',
+                        'text-gray-900 hover:text-[#DC2626]',
+                        isActiveRoute(item.href) ? 'text-[#DC2626] font-semibold' : ''
                       ]">
             {{ item.name }}
-            <div v-if="isActiveRoute(item.href)" class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-8 h-0.5 bg-primary-600 rounded-full"></div>
           </router-link>
         </div>
 
         <!-- User Actions -->
-        <div class="hidden md:flex items-center space-x-3">
+        <div class="hidden lg:flex items-center space-x-6">
+          <div class="w-px h-6 bg-gray-300"></div>
           <RouterLink :to="{ name: 'login' }"
-                  class="relative px-5 py-3 text-base font-medium text-gray-700 hover:text-primary-600
-                         hover:bg-primary-50 rounded-lg transition-all duration-200 group">
-            <span class="relative z-10">Login</span>
-            <div class="absolute inset-0 bg-primary-600 rounded-lg opacity-0 group-hover:opacity-5 transition-opacity duration-200"></div>
+                  class="text-base font-medium text-gray-900 hover:text-[#DC2626] transition-all duration-200 cursor-pointer">
+            Login
           </RouterLink>
           <RouterLink :to="{ name: 'register' }"
-                  class="relative px-6 py-3 text-base font-medium text-white bg-primary-600
-                         hover:bg-primary-700 rounded-lg transition-all duration-200 transform hover:scale-105
-                         shadow-sm hover:shadow-md">
-            <span>List Property</span>
+                  class="px-6 py-2.5 text-base font-semibold text-white bg-[#DC2626] hover:bg-red-700 rounded-full transition-all duration-200 cursor-pointer">
+            Sign up
           </RouterLink>
         </div>
 
         <!-- Mobile menu button -->
-        <div class="md:hidden">
+        <div class="lg:hidden">
           <button @click="isMenuOpen = !isMenuOpen"
                   class="relative p-2 text-gray-700 hover:text-primary-600 hover:bg-primary-50
                          rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500">
@@ -108,7 +103,7 @@ onUnmounted(() => {
         leave-from-class="transform scale-100 opacity-100"
         leave-to-class="transform scale-95 opacity-0"
       >
-        <div v-show="isMenuOpen" class="md:hidden">
+        <div v-show="isMenuOpen" class="lg:hidden">
           <div class="px-4 py-6 space-y-2">
             <router-link v-for="item in navigation"
                         :key="item.name"
