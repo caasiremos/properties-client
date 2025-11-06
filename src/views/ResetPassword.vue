@@ -89,33 +89,15 @@ const handleResetPassword = async () => {
       />
       
       <!-- Gradient Overlays -->
-      <div class="absolute inset-0 bg-gradient-to-br from-primary-900/95 via-primary-800/90 to-primary-600/80 mix-blend-multiply animate-gradient" />
-      <div class="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,transparent_40%,rgba(0,0,0,0.4))]" />
+      <div class="absolute inset-0 bg-gradient-to-br from-red-900/40 via-red-800/30 to-red-600/20 mix-blend-multiply animate-gradient" />
+      <div class="absolute inset-0 bg-gradient-to-br from-gray-900/60 via-gray-800/50 to-transparent" />
       
       <!-- Content -->
       <div class="absolute inset-0 flex items-center justify-center p-12">
         <div class="text-white text-center">
-          <!-- Decorative Elements -->
-          <div class="mb-8 relative">
-            <div class="flex flex-col items-center">
-              <div class="w-24 h-24 relative mb-4">
-                <div class="absolute inset-0 bg-white/10 rounded-full animate-pulse"></div>
-                <div class="absolute inset-2 bg-white/20 rounded-full animate-ping opacity-75"></div>
-                <HomeIcon class="w-24 h-24 text-white/90 relative z-10 transform hover:rotate-12 transition-transform duration-300" />
-              </div>
-              <div class="relative">
-                <span class="text-3xl font-bold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
-                  FindProperty
-                  <span class="text-primary-400">24</span>
-                </span>
-                <div class="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary-400 to-transparent"></div>
-              </div>
-            </div>
-          </div>
-          
           <!-- Text Content -->
           <div class="space-y-6 relative transition-all duration-500">
-            <h2 class="text-4xl font-bold mb-6 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white/80 animate-gradient-x">
+            <h2 class="text-5xl font-bold mb-6 leading-tight text-white">
               Reset Your Password
             </h2>
             <p class="text-xl text-white/90 max-w-lg mx-auto leading-relaxed">
@@ -129,20 +111,12 @@ const handleResetPassword = async () => {
     <!-- Right Column - Reset Form -->
     <div class="w-full lg:w-1/2 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-50 to-white">
       <div class="max-w-md w-full mx-auto">
+        <!-- Logo -->
+        <div class="flex justify-center mb-8">
+          <img src="/logo.svg" alt="FindProperty24" class="h-16 w-auto" />
+        </div>
+        
         <div class="text-center">
-          <div class="flex flex-col items-center mb-2 transform hover:scale-105 transition-transform duration-300">
-            <router-link to="/" class="flex items-center space-x-2">
-              <div class="w-20 h-20 bg-gradient-to-tr from-primary-700 to-primary-500 rounded-2xl shadow-lg flex items-center justify-center mb-4 relative overflow-hidden group">
-                <HomeIcon class="h-10 w-10 text-white transform group-hover:rotate-12 transition-transform duration-300" />
-                <div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </div>
-            </router-link>
-          </div>
-
-          <div class="flex justify-center items-center mb-8">
-            <div class="w-48 h-0.5 bg-gradient-to-r from-transparent via-gray-300 to-transparent rounded-full"></div>
-          </div>
-
           <h2 class="text-3xl font-bold tracking-tight text-gray-900 mb-2">
             Reset Password
           </h2>
@@ -171,18 +145,18 @@ const handleResetPassword = async () => {
                 :type="showPassword ? 'text' : 'password'"
                 required
                 placeholder=" "
-                class="peer block w-full rounded-lg border-2 border-gray-300 px-4 pt-5 pb-2 text-gray-900 focus:border-primary-500 focus:ring-0 focus:outline-none transition-all duration-300 bg-white/80 backdrop-blur-sm group-hover:bg-white/90"
+                class="peer block w-full rounded-lg border-2 border-gray-300 px-4 pt-5 pb-2 text-gray-900 focus:border-[#DC2626] focus:ring-0 focus:outline-none transition-all duration-300 bg-white/80 backdrop-blur-sm group-hover:bg-white/90"
               />
               <label
                 for="newPassword"
-                class="absolute left-4 top-4 z-10 origin-[0] -translate-y-3 scale-75 transform text-gray-500 duration-200 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75 peer-focus:text-primary-500 peer-focus:font-medium"
+                class="absolute left-4 top-4 z-10 origin-[0] -translate-y-3 scale-75 transform text-gray-500 duration-200 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75 peer-focus:text-[#DC2626] peer-focus:font-medium"
               >
                 New Password
               </label>
               <button
                 type="button"
                 @click="showPassword = !showPassword"
-                class="absolute right-4 top-4 text-gray-400 hover:text-primary-500 transition-colors duration-200"
+                class="absolute right-4 top-4 text-gray-400 hover:text-[#DC2626] transition-colors duration-200"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -200,18 +174,18 @@ const handleResetPassword = async () => {
                 :type="showConfirmPassword ? 'text' : 'password'"
                 required
                 placeholder=" "
-                class="peer block w-full rounded-lg border-2 border-gray-300 px-4 pt-5 pb-2 text-gray-900 focus:border-primary-500 focus:ring-0 focus:outline-none transition-all duration-300 bg-white/80 backdrop-blur-sm group-hover:bg-white/90"
+                class="peer block w-full rounded-lg border-2 border-gray-300 px-4 pt-5 pb-2 text-gray-900 focus:border-[#DC2626] focus:ring-0 focus:outline-none transition-all duration-300 bg-white/80 backdrop-blur-sm group-hover:bg-white/90"
               />
               <label
                 for="confirmPassword"
-                class="absolute left-4 top-4 z-10 origin-[0] -translate-y-3 scale-75 transform text-gray-500 duration-200 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75 peer-focus:text-primary-500 peer-focus:font-medium"
+                class="absolute left-4 top-4 z-10 origin-[0] -translate-y-3 scale-75 transform text-gray-500 duration-200 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75 peer-focus:text-[#DC2626] peer-focus:font-medium"
               >
                 Confirm New Password
               </label>
               <button
                 type="button"
                 @click="showConfirmPassword = !showConfirmPassword"
-                class="absolute right-4 top-4 text-gray-400 hover:text-primary-500 transition-colors duration-200"
+                class="absolute right-4 top-4 text-gray-400 hover:text-[#DC2626] transition-colors duration-200"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -224,7 +198,7 @@ const handleResetPassword = async () => {
               <button
                 type="submit"
                 :disabled="isLoading"
-                class="group relative flex w-full justify-center rounded-lg border border-transparent bg-primary-600 py-3 px-4 text-sm font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:-translate-y-0.5"
+                class="group relative flex w-full justify-center rounded-lg border border-transparent bg-[#DC2626] py-3 px-4 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-[#DC2626] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
               >
                 <span v-if="isLoading" class="flex items-center">
                   <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -240,7 +214,7 @@ const handleResetPassword = async () => {
             <div class="text-center">
               <router-link
                 to="/login"
-                class="text-sm font-medium text-primary-600 hover:text-primary-500 transition-colors duration-200"
+                class="text-sm font-medium text-[#DC2626] hover:text-red-700 transition-colors duration-200"
               >
                 Back to Login
               </router-link>

@@ -52,37 +52,21 @@ onMounted(async () => {
       />
       
       <!-- Gradient Overlays -->
-      <div class="absolute inset-0 bg-gradient-to-br from-primary-900/95 via-primary-800/90 to-primary-600/80 mix-blend-multiply animate-gradient" />
-      <div class="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,transparent_40%,rgba(0,0,0,0.4))]" />
+      <div class="absolute inset-0 bg-gradient-to-br from-red-900/40 via-red-800/30 to-red-600/20 mix-blend-multiply animate-gradient" />
+      <div class="absolute inset-0 bg-gradient-to-br from-gray-900/60 via-gray-800/50 to-transparent" />
       
       <!-- Content -->
       <div class="absolute inset-0 flex items-center justify-center p-12">
-        <!-- Decorative Elements -->
-        <div class="mb-8 relative">
-          <div class="flex flex-col items-center">
-            <div class="w-24 h-24 relative mb-4">
-              <div class="absolute inset-0 bg-white/10 rounded-full animate-pulse"></div>
-              <div class="absolute inset-2 bg-white/20 rounded-full animate-ping opacity-75"></div>
-              <HomeIcon class="w-24 h-24 text-white/90 relative z-10 transform hover:rotate-12 transition-transform duration-300" />
-            </div>
-            <div class="relative">
-              <span class="text-3xl font-bold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
-                FindProperty
-                <span class="text-primary-400">24</span>
-              </span>
-              <div class="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary-400 to-transparent"></div>
-            </div>
+        <div class="text-white text-center">
+          <!-- Text Content -->
+          <div class="space-y-6 relative transform transition-all duration-500">
+            <h2 class="text-5xl font-bold mb-6 leading-tight text-white">
+              Email Verification
+            </h2>
+            <p class="text-xl text-white/90 max-w-lg mx-auto leading-relaxed">
+              {{ error ? 'Verification in progress...' : 'Your email is being verified. Please wait...' }}
+            </p>
           </div>
-        </div>
-        
-        <!-- Text Content -->
-        <div class="space-y-6 relative transform transition-all duration-500">
-          <h2 class="text-4xl font-bold mb-6 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white/80 animate-gradient-x">
-            Email Verification
-          </h2>
-          <p class="text-xl text-white/90 max-w-lg mx-auto leading-relaxed">
-            {{ error ? 'Verification in progress...' : 'Your email is being verified. Please wait...' }}
-          </p>
         </div>
       </div>
     </div>
@@ -90,14 +74,16 @@ onMounted(async () => {
     <!-- Right Column - Verification Message -->
     <div class="w-full lg:w-1/2 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-50 to-white">
       <div class="max-w-md w-full mx-auto">
+        <!-- Logo -->
+        <div class="flex justify-center mb-8">
+          <img src="/logo.svg" alt="FindProperty24" class="h-16 w-auto" />
+        </div>
+        
         <div class="text-center">
-          <div class="flex justify-center items-center mb-8">
-            <div class="w-48 h-0.5 bg-gradient-to-r from-transparent via-gray-300 to-transparent rounded-full"></div>
-          </div>
 
           <!-- Loading/Error/Success Icon -->
           <div v-if="isLoading" class="mx-auto flex items-center justify-center h-24 w-24 rounded-full bg-gray-100 mb-6">
-            <svg class="animate-spin h-12 w-12 text-primary-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <svg class="animate-spin h-12 w-12 text-[#DC2626]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
               <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
               <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
@@ -123,14 +109,14 @@ onMounted(async () => {
           <!-- Loading Animation -->
           <div v-if="!error" class="mt-8">
             <div class="w-full bg-gray-200 rounded-full h-2.5">
-              <div class="bg-primary-600 h-2.5 rounded-full animate-progress"></div>
+              <div class="bg-[#DC2626] h-2.5 rounded-full animate-progress"></div>
             </div>
           </div>
 
           <div class="mt-8">
             <router-link
               to="/login"
-              class="inline-flex items-center text-sm font-medium text-primary-600 hover:text-primary-500 transition-colors duration-200"
+              class="inline-flex items-center text-sm font-medium text-[#DC2626] hover:text-red-700 transition-colors duration-200"
             >
               Go to Login
               <svg class="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
