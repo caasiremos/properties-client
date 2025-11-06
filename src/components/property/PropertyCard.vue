@@ -31,64 +31,82 @@ const handleCardClick = () => {
   <div
     @click="handleCardClick"
     :class="[
-      'bg-white rounded-xl shadow-sm overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-[1.02] group',
+      'bg-white rounded-2xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl group',
       canViewDetails ? 'cursor-pointer' : ''
     ]">
     <div class="relative">
-      <img :src="props.property.image" :alt="props.property.title" class="h-56 w-full object-cover transition-transform duration-300 group-hover:scale-105" />
-
-      <!-- Badges -->
-      <div class="absolute top-3 left-3 flex space-x-2">
-        <span v-if="props.property.featured" class="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-md shadow-md">
-          FEATURED
-        </span>
-        <span v-if="props.property.new" class="bg-green-600 text-white text-xs font-bold px-2 py-1 rounded-md shadow-md">
-          NEW
-        </span>
-      </div>
-
-      <!-- Favorite button -->
-      <button @click.stop class="absolute top-3 right-3 p-2 bg-white/90 backdrop-blur-sm rounded-full shadow-md hover:bg-white hover:scale-110 transition-all duration-200">
-        <HeartIcon class="h-5 w-5 text-gray-600 hover:text-red-500 transition-colors duration-200" />
-      </button>
-    </div>
-
-    <div class="p-5">
-      <div class="flex justify-between items-start mb-3">
-        <h3 class="text-lg font-bold text-gray-900 line-clamp-1 group-hover:text-primary-600 transition-colors duration-200">
-          {{ props.property.title }}
-        </h3>
-        <div class="text-right">
-          <span class="text-xl font-bold text-gray-900">${{ props.property.price.toLocaleString() }}</span>
-          <div v-if="props.property.price >= 300000" class="text-xs text-gray-500">Premium</div>
+      <!-- Red Top Bar with Badges -->
+      <div class="relative">
+        <div class="absolute top-0 left-0 right-0 h-12 bg-[#DC2626] rounded-t-2xl z-10"></div>
+        
+        <!-- Badges Container -->
+        <div class="absolute top-0 left-0 right-0 h-12 px-3 flex items-center justify-between z-20">
+          <!-- Promoted Badge -->
+          <div class="bg-gray-800 text-white text-[10px] font-bold uppercase tracking-wide px-2.5 py-1 rounded">
+            Promoted
+          </div>
+          
+          <!-- Seeff Logo Badge -->
+          <div class="bg-black text-white px-3 py-1 rounded-md">
+            <span class="text-xs font-bold tracking-wider" style="font-family: serif;">SEEFF</span>
+          </div>
         </div>
       </div>
-
-      <div class="flex items-center text-gray-600 mb-4">
-        <MapPinIcon class="h-4 w-4 mr-2 text-primary-500" />
-        <span class="text-sm font-medium">{{ props.property.location }}</span>
+      
+      <!-- Property Image -->
+      <div class="relative pt-12">
+        <img :src="props.property.image" :alt="props.property.title" class="h-48 w-full object-cover transition-transform duration-300 group-hover:scale-105" />
       </div>
 
-      <div class="flex justify-between text-sm text-gray-600 border-t border-gray-100 pt-4">
+    <div class="p-4">
+      <!-- Price -->
+      <div class="mb-2">
+        <span class="text-lg font-bold text-gray-900">UGX {{ props.property.price.toLocaleString() }}</span>
+      </div>
+
+      <!-- Title -->
+      <div class="mb-3">
+        <h3 class="text-sm text-gray-700 line-clamp-1">
+          {{ props.property.bedrooms || 3 }} Bedroom Townhouse in <span class="font-semibold">{{ props.property.location.split(',')[0] }}</span>
+        </h3>
+      </div>
+
+      <!-- Property Details -->
+      <div class="flex items-center justify-between text-xs text-gray-600 mb-3">
         <div class="flex items-center space-x-1">
-          <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
           </svg>
-          <span class="font-medium">{{ props.property.bedrooms || props.property.amenities?.bedroom || 0 }} Beds</span>
+          <span>{{ props.property.bedrooms || 3 }}</span>
         </div>
         <div class="flex items-center space-x-1">
-          <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
           </svg>
-          <span class="font-medium">{{ props.property.bathrooms || props.property.amenities?.bathroom || 0 }} Baths</span>
+          <span>{{ props.property.bathrooms || 4 }}</span>
         </div>
         <div class="flex items-center space-x-1">
-          <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+          </svg>
+          <span>{{ props.property.bathrooms || 4 }}</span>
+        </div>
+        <div class="flex items-center space-x-1">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path>
           </svg>
-          <span class="font-medium">{{ props.property.area || props.property.amenities?.area || 0 }} sqft</span>
+          <span>{{ props.property.area || 437 }} m²</span>
         </div>
       </div>
+
+      <!-- Location and Favorite -->
+      <div class="flex items-center justify-between border-t border-gray-100 pt-3">
+        <span class="text-xs text-gray-600">{{ props.property.location.split(',').pop().trim() }}</span>
+        <button @click.stop class="text-[#DC2626] hover:scale-110 transition-transform duration-200">
+          <HeartIcon class="h-5 w-5" />
+        </button>
+      </div>
+    </div>
     </div>
   </div>
 </template>
