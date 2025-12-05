@@ -42,8 +42,8 @@ onUnmounted(() => {
 
 <template>
   <header :class="[
-    'w-full z-50 transition-all duration-300 ease-in-out',
-    hasScrolled ? 'bg-white/95 backdrop-blur-md shadow-sm' : 'bg-white shadow-sm'
+    'w-full z-50 transition-all duration-300 ease-in-out sticky top-0',
+    hasScrolled ? 'bg-white/95 backdrop-blur-md shadow-md' : 'bg-white shadow-sm'
   ]">
     <nav class="mx-auto max-w-full px-8 lg:px-16" aria-label="Top">
       <div class="flex h-20 items-center justify-between">

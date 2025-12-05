@@ -1,11 +1,8 @@
 <script setup>
-import { computed } from 'vue';
 import { useRouter } from 'vue-router';
-import { useStorage } from '@vueuse/core';
 import { HeartIcon, MapPinIcon } from '@heroicons/vue/24/outline';
 
 const router = useRouter();
-const token = useStorage('ACCESS_TOKEN');
 
 const props = defineProps({
   property: {
@@ -17,23 +14,16 @@ const props = defineProps({
   }
 });
 
-const isAgent = computed(() => !!token.value);
-const canViewDetails = computed(() => isAgent.value);
-
 const handleCardClick = () => {
-  if (canViewDetails.value) {
-    router.push(`/agent/properties/${props.property.id}`);
-  }
+  // All users go to public property detail page
+  router.push(`/property/${props.property.id}`);
 };
 </script>
 
 <template>
   <div
     @click="handleCardClick"
-    :class="[
-      'bg-white rounded-2xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl group',
-      canViewDetails ? 'cursor-pointer' : ''
-    ]">
+    class="bg-white rounded-2xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl group cursor-pointer">
     <div class="relative">
       <!-- Red Top Bar with Badges -->
       <div class="relative">

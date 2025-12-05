@@ -22,6 +22,7 @@ import { useStorage } from '@vueuse/core';
 import Profile from '../views/Agents/Profile.vue';
 import PropertyDetail from '../views/Agents/PropertyDetail.vue';
 import SearchResults from '../views/SearchResults.vue';
+import PropertyDetails from '../views/PropertyDetails.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -76,6 +77,7 @@ const router = createRouter({
       children: [
         { path: '', component: Home },
         { path: 'properties', component: SearchResults },
+        { path: 'property/:id', component: PropertyDetails },
         { path: 'buy', component: Buy },
         { path: 'rent', component: Rent },
         { path: 'furnished', component: Furnished },
