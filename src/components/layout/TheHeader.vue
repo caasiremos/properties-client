@@ -45,12 +45,20 @@ onUnmounted(() => {
     'w-full z-50 transition-all duration-300 ease-in-out sticky top-0',
     hasScrolled ? 'bg-white/95 backdrop-blur-md shadow-md' : 'bg-white shadow-sm'
   ]">
-    <nav class="mx-auto max-w-full px-8 lg:px-16" aria-label="Top">
-      <div class="flex h-20 items-center justify-between">
+    <nav class="mx-auto max-w-full px-8 lg:px-16 transition-all duration-300" aria-label="Top">
+      <div :class="[
+        'flex items-center justify-between transition-all duration-300',
+        hasScrolled ? 'h-16' : 'h-20'
+      ]">
         <!-- Logo -->
         <div class="flex items-center">
           <router-link to="/" class="flex items-center group">
-            <img src="/logo.svg" alt="FindProperty24" class="h-12 w-auto transition-all duration-200 group-hover:scale-105" />
+            <img src="/logo.svg" 
+                 alt="FindProperty24" 
+                 :class="[
+                   'w-auto transition-all duration-300 group-hover:scale-105',
+                   hasScrolled ? 'h-10' : 'h-12'
+                 ]" />
           </router-link>
         </div>
 
