@@ -1,26 +1,55 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
 import { MagnifyingGlassIcon } from '@heroicons/vue/24/outline';
 
+const router = useRouter();
 const activeTab = ref('buy');
 const searchQuery = ref('');
+const errorMessage = ref('');
 
 const tabs = [
   { id: 'buy', label: 'Buy' },
   { id: 'rent', label: 'Rent' },
-  { id: 'furnished', label: 'Furnished' },
-  { id: 'agent', label: 'Agent' }
+  { id: 'furnished', label: 'Furnished' }
 ];
 
+const isSearchValid = computed(() => {
+  return searchQuery.value.trim().length >= 3;
+});
+
 const handleSearch = () => {
-  console.log('Search params:', {
-    query: searchQuery.value,
-    type: activeTab.value
+  const trimmedQuery = searchQuery.value.trim();
+  
+  // Validate minimum length
+  if (trimmedQuery.length < 3) {
+    errorMessage.value = 'Please enter at least 3 characters to search';
+    return;
+  }
+  
+  // Clear error message
+  errorMessage.value = '';
+  
+  const query = {
+    type: activeTab.value,
+    q: trimmedQuery
+  };
+  
+  router.push({
+    path: '/properties',
+    query
   });
 };
 
 const setActiveTab = (tabId) => {
   activeTab.value = tabId;
+};
+
+// Clear error when user types
+const handleInput = () => {
+  if (errorMessage.value && searchQuery.value.trim().length >= 3) {
+    errorMessage.value = '';
+  }
 };
 </script>
 
@@ -71,20 +100,34 @@ const setActiveTab = (tabId) => {
 
           <!-- Search Bar -->
           <div class="max-w-3xl mx-auto">
-            <div class="bg-white rounded-full shadow-2xl flex items-stretch overflow-hidden">
-              <input
-                type="text"
-                v-model="searchQuery"
-                placeholder="Enter City, suburb or area"
-                class="flex-1 px-6 py-3 text-gray-700 placeholder-gray-400 text-base focus:outline-none focus:ring-0 bg-transparent"
-                @keyup.enter="handleSearch"
-              />
-              <button
-                @click="handleSearch"
-                class="bg-[#DC2626] text-white px-8 py-3 hover:bg-red-700 transition-colors duration-200 font-semibold text-base cursor-pointer"
-              >
-                Search
-              </button>
+            <div class="space-y-2">
+              <div class="bg-white rounded-full shadow-2xl flex items-stretch overflow-hidden">
+                <input
+                  type="text"
+                  v-model="searchQuery"
+                  placeholder="Enter City, suburb or area (min. 3 characters)"
+                  class="flex-1 px-6 py-3 text-gray-700 placeholder-gray-400 text-base focus:outline-none focus:ring-0 bg-transparent"
+                  @keyup.enter="handleSearch"
+                  @input="handleInput"
+                  minlength="3"
+                />
+                <button
+                  @click="handleSearch"
+                  :disabled="!isSearchValid"
+                  :class="[
+                    'px-8 py-3 transition-colors duration-200 font-semibold text-base',
+                    isSearchValid
+                      ? 'bg-[#DC2626] text-white hover:bg-red-700 cursor-pointer'
+                      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  ]"
+                >
+                  Search
+                </button>
+              </div>
+              <!-- Error Message -->
+              <p v-if="errorMessage" class="text-red-500 text-sm text-center px-4">
+                {{ errorMessage }}
+              </p>
             </div>
           </div>
 

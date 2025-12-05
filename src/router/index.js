@@ -4,6 +4,7 @@ import GuestLayout from '../layouts/GuestLayout.vue';
 import Home from '../views/Home.vue';
 import Buy from '../views/Buy.vue';
 import Rent from '../views/Rent.vue';
+import Furnished from '../views/Furnished.vue';
 import Sell from '../views/Sell.vue';
 import Agents from '../views/Agents.vue';
 import Properties from '../views/Agents/Properties.vue';
@@ -20,6 +21,7 @@ import EmailVerified from '../views/EmailVerified.vue';
 import { useStorage } from '@vueuse/core';
 import Profile from '../views/Agents/Profile.vue';
 import PropertyDetail from '../views/Agents/PropertyDetail.vue';
+import SearchResults from '../views/SearchResults.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -73,8 +75,10 @@ const router = createRouter({
       meta: { requiresAuth: false },
       children: [
         { path: '', component: Home },
+        { path: 'properties', component: SearchResults },
         { path: 'buy', component: Buy },
         { path: 'rent', component: Rent },
+        { path: 'furnished', component: Furnished },
         { path: 'sell', component: Sell },
         { path: 'agents', component: Agents },
         { path: 'news', component: News },

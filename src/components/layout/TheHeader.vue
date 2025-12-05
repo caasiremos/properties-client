@@ -12,7 +12,6 @@ const navigation = [
   { name: 'Buy', href: '/buy' },
   { name: 'Rent', href: '/rent' },
   { name: 'Furnished', href: '/furnished' },
-  { name: 'Land', href: '/land' },
   { name: 'Services', href: '/services' },
   { name: 'Find agent', href: '/agents' },
 ];

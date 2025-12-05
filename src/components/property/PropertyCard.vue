@@ -48,7 +48,7 @@ const handleCardClick = () => {
           
           <!-- Seeff Logo Badge -->
           <div class="bg-black text-white px-3 py-1 rounded-md">
-            <span class="text-xs font-bold tracking-wider" style="font-family: serif;">SEEFF</span>
+            <span class="text-xs font-bold tracking-wider">SEEFF</span>
           </div>
         </div>
       </div>

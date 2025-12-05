@@ -31,7 +31,7 @@ const updateFilter = (key, value) => {
     <div class="flex justify-between items-center mb-6">
       <h2 class="text-lg font-semibold">Filters</h2>
       <button @click="$emit('clearFilters')" 
-              class="text-sm text-primary-600 hover:text-primary-700">
+              class="text-sm text-[#DC2626] hover:text-red-700 font-medium transition-colors duration-200">
         Clear all
       </button>
     </div>
@@ -73,7 +73,7 @@ const updateFilter = (key, value) => {
                      ? [...selectedFilters.propertyTypes, type]
                      : selectedFilters.propertyTypes.filter(t => t !== type)
                  )"
-                 class="rounded-sm border-gray-300 text-primary-600 focus:ring-primary-500" />
+                 class="rounded-sm border-gray-300 text-[#DC2626] focus:ring-[#DC2626]" />
           <span class="ml-2 text-sm text-gray-700">{{ type }}</span>
         </label>
       </div>
@@ -108,7 +108,7 @@ const updateFilter = (key, value) => {
                      ? [...selectedFilters.amenities, amenity]
                      : selectedFilters.amenities.filter(a => a !== amenity)
                  )"
-                 class="rounded-sm border-gray-300 text-primary-600 focus:ring-primary-500" />
+                 class="rounded-sm border-gray-300 text-[#DC2626] focus:ring-[#DC2626]" />
           <span class="ml-2 text-sm text-gray-700">{{ amenity }}</span>
         </label>
       </div>
